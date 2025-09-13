@@ -1,6 +1,6 @@
 # Soal 1
 
-![Gambar Soal1](img/Soal1.png.png)  
+![Gambar Soal1](img/Soal1.png)  
 
 # Soal 2
 # Mengapa Memahami Bahasa Pemrograman Dart Sangat Penting Sebelum Menggunakan Flutter?
