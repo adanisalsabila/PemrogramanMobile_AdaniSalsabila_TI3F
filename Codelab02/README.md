@@ -1,3 +1,7 @@
+# Soal 1
+
+![Gambar Soal1](img/Soal1.png.png)  
+
 # Soal 2
 # Mengapa Memahami Bahasa Pemrograman Dart Sangat Penting Sebelum Menggunakan Flutter?
 
@@ -13,7 +17,11 @@ kode dart dapat dieksekusi melalui dua cara, yaitu dart virtual machine (vm) dan
 # Soal 4
 # Buatlah penjelasan dan contoh eksekusi kode tentang perbedaan Null Safety dan Late variabel !
 
+![Gambar Soal 4 Null Safety](img/Soal4NullSafety.png)  
+
 null safety adalah fitur di dart yang mencegah kesalahan umum yang sering disebut null reference exception atau null pointer exception. fitur ini memastikan bahwa sebuah variabel tidak dapat memiliki nilai null kecuali jika kita secara eksplisit menyatakannya. sedangkan, late variabel adalah modifier yang digunakan untuk mendeklarasikan sebuah variabel yang tidak akan diinisialisasi segera, tetapi dijamin akan diinisialisasi sebelum.
+
+![Gambar Soal 4 Late Variabel](img/Soal4LateVariabel.png)  
 
 penjelasan kode eksekusi tentang perbedaan null safety dan late variabel : 
 jadi, null safety menandai bahwa variabel bisa bernilai null, sedangkan late variabel menunda inisialisasi variabel yang dijamin akan bernilai. cara penggunaan null safety adalah saat tidak yakin apakah sebuah variabel akan memiliki nilai atau tidak, sedangkan cara penggunaan late variabel adalah saat yakin variabel akan memiliki nilai, tetapi tidak bisa menginisialisasinya saat deklarasi.

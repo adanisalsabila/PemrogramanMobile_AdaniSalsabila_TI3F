@@ -45,3 +45,8 @@ Terjadi error karena variabel index belum dideklarasikan dengan tipe data dan ni
 
 Setelh diperbaiki:  
 ![Gambar Praktikum 3bFixed](img/Praktikum3bFixed.png)  
+
+
+# TUGAS PRAKTIKUM
+
+![Gambar Tugas Praktikum](img/TugasPraktikum.png)  
