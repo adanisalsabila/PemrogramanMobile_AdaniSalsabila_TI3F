@@ -29,3 +29,12 @@ Menambahkan kode:
 
 ![Gambar Praktikum 2b](img/Praktikum2b.png)  
 Tidak ada error yang terjadi dan semua kode berjalan dengan baik. Output angka dari 0 hingga 32 dari loop while dan angka dari 33 hingga 76 dari loop do-while. 
+
+# PRAKTIKUM 3
+
+![Gambar Praktikum 3a](img/Praktikum3a.png)  
+Terjadi error karena variabel belum dideklarasikan, sintaks loop tidak lengkap, dan kesalahan penulisan.
+
+Setelah diperbaiki :  
+![Gambar Praktikum 3aFixed](img/Praktikum3aFixed.png)  
+
