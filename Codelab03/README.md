@@ -38,3 +38,10 @@ Terjadi error karena variabel belum dideklarasikan, sintaks loop tidak lengkap, 
 Setelah diperbaiki :  
 ![Gambar Praktikum 3aFixed](img/Praktikum3aFixed.png)  
 
+Menambahkan kode:  
+
+![Gambar Praktikum 3b](img/Praktikum3b.png)  
+Terjadi error karena variabel index belum dideklarasikan dengan tipe data dan nilai awal, sintaks for loop tidak lengkap karena tidak ada bagian increment atau decrement, dan kode tersebut memiliki kesalahan penulisan case-sensitive.
+
+Setelh diperbaiki:  
+![Gambar Praktikum 3bFixed](img/Praktikum3bFixed.png)  
