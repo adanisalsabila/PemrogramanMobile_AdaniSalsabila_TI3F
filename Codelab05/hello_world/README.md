@@ -1,16 +1,42 @@
-# hello_world
+# Praktikum 1 : Membuat Project Flutter Baru
 
-A new Flutter project.
+![Gambar Flutter Project](img/flutterproject.png)   
 
-## Getting Started
+# Praktikum 2 : Menghubungkan Perangkat Android atau Emulator
 
-This project is a starting point for a Flutter application.
+![Gambar Flutter Project](img/helloworld1.png)   
 
-A few resources to get you started if this is your first Flutter project:
+![Gambar Flutter Project](img/helloworld2.png)   
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![Gambar Flutter Project](img/helloworld3.png)   
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Praktikum 3 : Membuat Repository GitHub dan Laporan Praktikum
+
+![Gambar Github](img/github.png)   
+
+# Praktikum 4 : Menerapkan Widget Dasar
+
+![Gambar Flutter Demo](img/flutterdemo.png)   
+
+![Gambar Flutter Demo](img/flutterdemo2.png)   
+
+![Gambar Flutter Demo](img/flutterdemo3.png)   
+
+# Praktikum 5 : Menerapkan Widget Material Design dan iOS Cupertino
+
+![Gambar Flutter Demo](img/flutterproject.png)   
+
+![Gambar Flutter Demo](img/cupertinobutton.png)   
+
+![Gambar Flutter Demo](img/datepicker.png)   
+
+![Gambar Flutter Demo](img/dialogwidget.png)   
+
+![Gambar Flutter Demo](img/floatingactionbutton.png)   
+
+![Gambar Flutter Demo](img/incrementapp.png)   
+
+![Gambar Flutter Demo](img/textfield.png)   
+
+# Tugas Praktikum : Selesaikan Codelabs: Your first Flutter app
+
