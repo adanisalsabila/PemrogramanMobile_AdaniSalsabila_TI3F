@@ -24,7 +24,7 @@
 
 # Praktikum 5 : Menerapkan Widget Material Design dan iOS Cupertino
 
-![Gambar Flutter Project](img/flutterproject.png)   
+![Gambar Flutter Project](img/flutterdemo4.png)   
 
 ![Gambar Flutter Project](img/cupertinobutton.png)   
 
