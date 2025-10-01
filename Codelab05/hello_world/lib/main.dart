@@ -289,6 +289,223 @@
 
 // lib/main.dart
 
+// import 'package:flutter/material.dart';
+
+// // Model Item
+// class Item {
+//   final String name;
+//   final int price;
+//   final String image;
+//   final String desc;
+
+//   Item({
+//     required this.name,
+//     required this.price,
+//     required this.image,
+//     required this.desc,
+//   });
+// }
+
+// void main() {
+//   runApp(const MyApp());
+// }
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Flutter Layout & Navigasi - Adani Salsabila (2341720123)',
+//       debugShowCheckedModeBanner: false,
+//       initialRoute: '/',
+//       routes: {
+//         '/': (context) => const HomePage(),
+//         '/item': (context) => const ItemPage(),
+//       },
+//     );
+//   }
+// }
+
+// // ================= HOME PAGE =================
+// class HomePage extends StatelessWidget {
+//   const HomePage({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final List<Item> items = [
+//       Item(
+//         name: 'Gunung Bromo',
+//         price: 50000,
+//         image: 'assets/bromo.jpg', 
+//         desc:
+//             'Gunung Bromo adalah salah satu destinasi wisata populer di Jawa Timur. '
+//             'Keindahan sunrise dan lautan pasir menjadikannya daya tarik utama. '
+//             '— Adani Salsabila (2341720123)',
+//       ),
+//       Item(
+//         name: 'Gunung Semeru',
+//         price: 75000,
+//         image: 'assets/semeru.jpg',
+//         desc:
+//             'Gunung Semeru merupakan gunung tertinggi di Pulau Jawa. '
+//             'Banyak pendaki tertarik untuk menaklukkan puncaknya, Mahameru. '
+//             '— Adani Salsabila (2341720123)',
+//       ),
+//     ];
+
+//     Widget titleSection = Container(
+//       padding: const EdgeInsets.all(32),
+//       child: Row(
+//         children: [
+//           Expanded(
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Container(
+//                   padding: const EdgeInsets.only(bottom: 8),
+//                   child: const Text(
+//                     'Wisata Gunung di Jawa Timur',
+//                     style: TextStyle(fontWeight: FontWeight.bold),
+//                   ),
+//                 ),
+//                 Text(
+//                   'Indonesia',
+//                   style: TextStyle(color: Colors.grey[500]),
+//                 ),
+//               ],
+//             ),
+//           ),
+//           Icon(Icons.star, color: Colors.red[500]),
+//           const Text('99'),
+//         ],
+//       ),
+//     );
+
+//     Color color = Theme.of(context).primaryColor;
+//     Widget buttonSection = Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//       children: [
+//         _buildButtonColumn(color, Icons.call, 'CALL'),
+//         _buildButtonColumn(color, Icons.near_me, 'ROUTE'),
+//         _buildButtonColumn(color, Icons.share, 'SHARE'),
+//       ],
+//     );
+
+//     Widget textSection = Container(
+//       padding: const EdgeInsets.all(32),
+//       child: const Text(
+//         'Selamat datang di aplikasi Flutter Layout & Navigasi. '
+//         'Aplikasi ini dibuat oleh Adani Salsabila (2341720123). '
+//         'Silakan pilih destinasi wisata di bawah untuk melihat detail.',
+//         softWrap: true,
+//       ),
+//     );
+
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Home - Layout & Navigasi'),
+//       ),
+//       body: ListView(
+//         children: [
+//           Image.asset(
+//             'assets/bromo.jpg',
+//             width: double.infinity,
+//             height: 240,
+//             fit: BoxFit.cover,
+//           ),
+//           titleSection,
+//           buttonSection,
+//           textSection,
+//           const Divider(),
+//           ...items.map((item) {
+//             return Card(
+//               child: InkWell(
+//                 onTap: () {
+//                   Navigator.pushNamed(context, '/item', arguments: item);
+//                 },
+//                 child: ListTile(
+//                   leading: Image.asset(
+//                     item.image,
+//                     width: 50,
+//                     height: 50,
+//                     fit: BoxFit.cover,
+//                   ),
+//                   title: Text(item.name),
+//                   subtitle: Text('Rp ${item.price}'),
+//                 ),
+//               ),
+//             );
+//           }).toList(),
+//         ],
+//       ),
+//     );
+//   }
+
+//   static Column _buildButtonColumn(Color color, IconData icon, String label) {
+//     return Column(
+//       mainAxisSize: MainAxisSize.min,
+//       mainAxisAlignment: MainAxisAlignment.center,
+//       children: [
+//         Icon(icon, color: color),
+//         Container(
+//           margin: const EdgeInsets.only(top: 8),
+//           child: Text(
+//             label,
+//             style: TextStyle(
+//               fontSize: 12,
+//               fontWeight: FontWeight.w400,
+//               color: color,
+//             ),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
+
+// // ================= ITEM PAGE =================
+// class ItemPage extends StatelessWidget {
+//   const ItemPage({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final item = ModalRoute.of(context)!.settings.arguments as Item;
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text(item.name),
+//       ),
+//       body: ListView(
+//         children: [
+//           Image.asset(
+//             item.image,
+//             width: double.infinity,
+//             height: 250,
+//             fit: BoxFit.cover,
+//           ),
+//           Container(
+//             padding: const EdgeInsets.all(16),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Text(item.name,
+//                     style: const TextStyle(
+//                         fontSize: 24, fontWeight: FontWeight.bold)),
+//                 const SizedBox(height: 8),
+//                 Text('Harga: Rp ${item.price}',
+//                     style: const TextStyle(fontSize: 18)),
+//                 const SizedBox(height: 16),
+//                 Text(item.desc),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// lib/main.dart
 import 'package:flutter/material.dart';
 
 // Model Item
@@ -337,7 +554,7 @@ class HomePage extends StatelessWidget {
       Item(
         name: 'Gunung Bromo',
         price: 50000,
-        image: 'assets/bromo.jpg', 
+        image: 'assets/bromo.jpg',
         desc:
             'Gunung Bromo adalah salah satu destinasi wisata populer di Jawa Timur. '
             'Keindahan sunrise dan lautan pasir menjadikannya daya tarik utama. '
@@ -425,11 +642,14 @@ class HomePage extends StatelessWidget {
                   Navigator.pushNamed(context, '/item', arguments: item);
                 },
                 child: ListTile(
-                  leading: Image.asset(
-                    item.image,
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
+                  leading: Hero(
+                    tag: item.name, // Hero untuk transisi gambar
+                    child: Image.asset(
+                      item.image,
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   title: Text(item.name),
                   subtitle: Text('Rp ${item.price}'),
@@ -477,11 +697,14 @@ class ItemPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          Image.asset(
-            item.image,
-            width: double.infinity,
-            height: 250,
-            fit: BoxFit.cover,
+          Hero(
+            tag: item.name, // Hero harus punya tag yang sama dengan di HomePage
+            child: Image.asset(
+              item.image,
+              width: double.infinity,
+              height: 250,
+              fit: BoxFit.cover,
+            ),
           ),
           Container(
             padding: const EdgeInsets.all(16),
