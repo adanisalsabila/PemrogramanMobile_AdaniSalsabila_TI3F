@@ -1133,7 +1133,13 @@ class MyApp extends StatelessWidget {
       ),
     );
 
-  
+    // --- Praktikum 4: imageSection (Langkah 2) ---
+    Widget imageSection = Image.asset(
+      'images/gunung_batu.jpg', // Ganti dengan nama file gambar Anda
+      width: 600,
+      height: 240,
+      fit: BoxFit.cover, // Gambar menutupi seluruh kotak rendernya
+    );
 
     // --- Layout Utama (Scaffold) ---
     return MaterialApp(
