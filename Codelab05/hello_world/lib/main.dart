@@ -1167,6 +1167,36 @@
 // }
 
 
+// import 'package:flutter/material.dart';
+// import 'pages/home_page.dart'; 
+// import 'pages/item_page.dart';
+
+// void main() => runApp(const MyApp());
+
+// class MyApp extends StatelessWidget {
+// const MyApp({super.key});
+
+//  @override
+//  Widget build(BuildContext context) {
+//  return MaterialApp(
+// title: 'Aplikasi Belanja',
+//  theme: ThemeData(
+//  primarySwatch: Colors.blue,
+//  ),
+
+//  initialRoute: '/',
+//  // Map routes yang sudah benar (tanpa 'const' pada fungsi builder)
+// routes: { 
+//  // Halaman Utama: Daftar Belanja
+//  '/': (context) => const HomePage(), // Boleh const di sini jika HomePage konstan
+
+//  // Halaman Detail Item
+// '/item': (context) => const ItemPage(), // Boleh const di sini jika ItemPage konstan
+// },
+// );
+// }
+// }
+
 import 'package:flutter/material.dart';
 import 'pages/home_page.dart'; 
 import 'pages/item_page.dart';
@@ -1174,25 +1204,28 @@ import 'pages/item_page.dart';
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-const MyApp({super.key});
+  const MyApp({super.key});
 
- @override
- Widget build(BuildContext context) {
- return MaterialApp(
-title: 'Aplikasi Belanja',
- theme: ThemeData(
- primarySwatch: Colors.blue,
- ),
-
- initialRoute: '/',
- // Map routes yang sudah benar (tanpa 'const' pada fungsi builder)
-routes: { 
- // Halaman Utama: Daftar Belanja
- '/': (context) => const HomePage(), // Boleh const di sini jika HomePage konstan
-
- // Halaman Detail Item
-'/item': (context) => const ItemPage(), // Boleh const di sini jika ItemPage konstan
-},
-);
-}
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Aplikasi Belanja',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      
+      initialRoute: '/',
+      // PERBAIKAN: Hapus 'const' dari map routes di sini.
+      // Function literals (seperti 'context => ...') tidak bisa menjadi konstan.
+      routes: { 
+        // Halaman Utama: Daftar Belanja
+        // Gunakan 'const' pada widget yang dikembalikan untuk performa
+        '/': (context) => const HomePage(), 
+        
+        // Halaman Detail Item
+        // Gunakan 'const' pada widget yang dikembalikan untuk performa
+        '/item': (context) => const ItemPage(), 
+      },
+    );
+  }
 }
