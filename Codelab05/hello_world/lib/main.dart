@@ -1043,6 +1043,7 @@
 //   }
 // }
 
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -1050,17 +1051,13 @@ void main() => runApp(const MyApp());
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // Langkah 1: Buat method Column _buildButtonColumn
+  // Method Pembantu dari Praktikum 2
   Column _buildButtonColumn(Color color, IconData icon, String label) {
     return Column(
-      // Atur agar kolom mengambil ruang minimum yang diperlukan di sumbu vertikal
       mainAxisSize: MainAxisSize.min,
-      // Posisikan anak-anak di tengah sumbu vertikal
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // Widget Icon dengan warna yang ditentukan
         Icon(icon, color: color),
-        // Container untuk memberi jarak antara Icon dan Text
         Container(
           margin: const EdgeInsets.only(top: 8),
           child: Text(
@@ -1068,7 +1065,7 @@ class MyApp extends StatelessWidget {
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w400,
-              color: color, // Teks menggunakan warna yang ditentukan
+              color: color,
             ),
           ),
         ),
@@ -1117,10 +1114,8 @@ class MyApp extends StatelessWidget {
       ),
     );
 
-    // Langkah 2: Buat widget buttonSection
+    // --- Praktikum 2: buttonSection ---
     Widget buttonSection = Row(
-      // MainAxisAlignment.spaceEvenly memberikan ruang kosong yang merata
-      // sebelum, di antara, dan setelah setiap kolom tombol.
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _buildButtonColumn(color, Icons.call, 'CALL'),
@@ -1129,10 +1124,20 @@ class MyApp extends StatelessWidget {
       ],
     );
 
+    // Langkah 1: Buat widget textSection
+    Widget textSection = Container(
+      padding: const EdgeInsets.all(32),
+      child: const Text(
+        'Kawasan wisata gunung di Batu menawarkan kombinasi sempurna antara petualangan dan relaksasi berkat keberadaan gugusan gunung seperti Gunung Panderman, Gunung Arjuno, dan Gunung Welirang. Selain pendakian yang menantang dengan pemandangan alam yang memukau, daerah pegunungan ini menjadi latar bagi berbagai destinasi populer, mulai dari taman rekreasi modern seperti Jatim Park yang memanfaatkan udara sejuknya, hingga area perkemahan yang tenang. Pengunjung dapat menikmati udara segar, berburu spot foto estetis, atau hanya bersantai di kafe dan vila dengan panorama lembah dan perbukitan yang menyegarkan mata, menjadikan wisata gunung di Batu daya tarik utama bagi turis domestik maupun mancanegara.',
+        softWrap: true,
+      ),
+    );
+
+  
+
     // --- Layout Utama (Scaffold) ---
     return MaterialApp(
       title: 'Flutter layout Adani Salsabila',
-      // Mengatur warna primer tema menjadi biru agar tombol terlihat (default Flutter)
       theme: ThemeData(
         primarySwatch: Colors.blue, 
       ),
@@ -1140,13 +1145,14 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Flutter layout Adani Salsabila - 2341720123'),
         ),
-        // Langkah 3: Tambah button section ke body
-        // Menggunakan Column untuk menumpuk bagian Judul dan bagian Tombol secara vertikal
+        // Langkah 2: Tambahkan variabel textSection ke body
+        // Menggunakan Column untuk menumpuk semua bagian secara vertikal
         body: Column(
           children: [
+            imageSection,
             titleSection,
             buttonSection,
-            // Widget lain (Text Section, Image) akan ditambahkan di praktikum berikutnya
+            textSection, // textSection ditambahkan setelah buttonSection
           ],
         ),
       ),
