@@ -1044,124 +1044,155 @@
 // }
 
 
+// import 'package:flutter/material.dart';
+
+// void main() => runApp(const MyApp());
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+
+//   // Method Pembantu dari Praktikum 2
+//   Column _buildButtonColumn(Color color, IconData icon, String label) {
+//     return Column(
+//       mainAxisSize: MainAxisSize.min,
+//       mainAxisAlignment: MainAxisAlignment.center,
+//       children: [
+//         Icon(icon, color: color),
+//         Container(
+//           margin: const EdgeInsets.only(top: 8),
+//           child: Text(
+//             label,
+//             style: TextStyle(
+//               fontSize: 12,
+//               fontWeight: FontWeight.w400,
+//               color: color,
+//             ),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     // Tentukan warna primer berdasarkan tema aplikasi
+//     Color color = Theme.of(context).primaryColor;
+
+//     // --- Praktikum 1: titleSection ---
+//     Widget titleSection = Container(
+//       padding: const EdgeInsets.all(32),
+//       child: Row(
+//         children: [
+//           Expanded(
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Container(
+//                   padding: const EdgeInsets.only(bottom: 8),
+//                   child: const Text(
+//                     'Wisata Gunung di Batu',
+//                     style: TextStyle(
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   ),
+//                 ),
+//                 Text(
+//                   'Batu, Malang, Indonesia',
+//                   style: TextStyle(
+//                     color: Colors.grey[500],
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//           Icon(
+//             Icons.star,
+//             color: Colors.red[500],
+//           ),
+//           const Text('41'),
+//         ],
+//       ),
+//     );
+
+//     // --- Praktikum 2: buttonSection ---
+//     Widget buttonSection = Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//       children: [
+//         _buildButtonColumn(color, Icons.call, 'CALL'),
+//         _buildButtonColumn(color, Icons.near_me, 'ROUTE'),
+//         _buildButtonColumn(color, Icons.share, 'SHARE'),
+//       ],
+//     );
+
+//     // Langkah 1: Buat widget textSection
+//     Widget textSection = Container(
+//       padding: const EdgeInsets.all(32),
+//       child: const Text(
+//         'Kawasan wisata gunung di Batu menawarkan kombinasi sempurna antara petualangan dan relaksasi berkat keberadaan gugusan gunung seperti Gunung Panderman, Gunung Arjuno, dan Gunung Welirang. Selain pendakian yang menantang dengan pemandangan alam yang memukau, daerah pegunungan ini menjadi latar bagi berbagai destinasi populer, mulai dari taman rekreasi modern seperti Jatim Park yang memanfaatkan udara sejuknya, hingga area perkemahan yang tenang. Pengunjung dapat menikmati udara segar, berburu spot foto estetis, atau hanya bersantai di kafe dan vila dengan panorama lembah dan perbukitan yang menyegarkan mata, menjadikan wisata gunung di Batu daya tarik utama bagi turis domestik maupun mancanegara.',
+//         softWrap: true,
+//       ),
+//     );
+
+//     // --- Praktikum 4: imageSection (Langkah 2) ---
+//     Widget imageSection = Image.asset(
+//       'assets/semeru.jpg', // Ganti dengan nama file gambar Anda
+//       width: 600,
+//       height: 240,
+//       fit: BoxFit.cover, // Gambar menutupi seluruh kotak rendernya
+//     );
+
+//     // --- Layout Utama (Scaffold) ---
+//     return MaterialApp(
+//       title: 'Flutter layout Adani Salsabila',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue, 
+//       ),
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: const Text('Flutter layout Adani Salsabila - 2341720123'),
+//         ),
+//         // Langkah 2: Tambahkan variabel textSection ke body
+//         // Menggunakan Column untuk menumpuk semua bagian secara vertikal
+//         body: ListView(
+//           children: [
+//             imageSection,
+//             titleSection,
+//             buttonSection,
+//             textSection, // textSection ditambahkan setelah buttonSection
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
 import 'package:flutter/material.dart';
+import 'pages/home_page.dart'; 
+import 'pages/item_page.dart';
 
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+const MyApp({super.key});
 
-  // Method Pembantu dari Praktikum 2
-  Column _buildButtonColumn(Color color, IconData icon, String label) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(icon, color: color),
-        Container(
-          margin: const EdgeInsets.only(top: 8),
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-              color: color,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+ @override
+ Widget build(BuildContext context) {
+ return MaterialApp(
+title: 'Aplikasi Belanja',
+ theme: ThemeData(
+ primarySwatch: Colors.blue,
+ ),
 
-  @override
-  Widget build(BuildContext context) {
-    // Tentukan warna primer berdasarkan tema aplikasi
-    Color color = Theme.of(context).primaryColor;
+ initialRoute: '/',
+ // Map routes yang sudah benar (tanpa 'const' pada fungsi builder)
+routes: { 
+ // Halaman Utama: Daftar Belanja
+ '/': (context) => const HomePage(), // Boleh const di sini jika HomePage konstan
 
-    // --- Praktikum 1: titleSection ---
-    Widget titleSection = Container(
-      padding: const EdgeInsets.all(32),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: const Text(
-                    'Wisata Gunung di Batu',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Text(
-                  'Batu, Malang, Indonesia',
-                  style: TextStyle(
-                    color: Colors.grey[500],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Icon(
-            Icons.star,
-            color: Colors.red[500],
-          ),
-          const Text('41'),
-        ],
-      ),
-    );
-
-    // --- Praktikum 2: buttonSection ---
-    Widget buttonSection = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        _buildButtonColumn(color, Icons.call, 'CALL'),
-        _buildButtonColumn(color, Icons.near_me, 'ROUTE'),
-        _buildButtonColumn(color, Icons.share, 'SHARE'),
-      ],
-    );
-
-    // Langkah 1: Buat widget textSection
-    Widget textSection = Container(
-      padding: const EdgeInsets.all(32),
-      child: const Text(
-        'Kawasan wisata gunung di Batu menawarkan kombinasi sempurna antara petualangan dan relaksasi berkat keberadaan gugusan gunung seperti Gunung Panderman, Gunung Arjuno, dan Gunung Welirang. Selain pendakian yang menantang dengan pemandangan alam yang memukau, daerah pegunungan ini menjadi latar bagi berbagai destinasi populer, mulai dari taman rekreasi modern seperti Jatim Park yang memanfaatkan udara sejuknya, hingga area perkemahan yang tenang. Pengunjung dapat menikmati udara segar, berburu spot foto estetis, atau hanya bersantai di kafe dan vila dengan panorama lembah dan perbukitan yang menyegarkan mata, menjadikan wisata gunung di Batu daya tarik utama bagi turis domestik maupun mancanegara.',
-        softWrap: true,
-      ),
-    );
-
-    // --- Praktikum 4: imageSection (Langkah 2) ---
-    Widget imageSection = Image.asset(
-      'assets/semeru.jpg', // Ganti dengan nama file gambar Anda
-      width: 600,
-      height: 240,
-      fit: BoxFit.cover, // Gambar menutupi seluruh kotak rendernya
-    );
-
-    // --- Layout Utama (Scaffold) ---
-    return MaterialApp(
-      title: 'Flutter layout Adani Salsabila',
-      theme: ThemeData(
-        primarySwatch: Colors.blue, 
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter layout Adani Salsabila - 2341720123'),
-        ),
-        // Langkah 2: Tambahkan variabel textSection ke body
-        // Menggunakan Column untuk menumpuk semua bagian secara vertikal
-        body: ListView(
-          children: [
-            imageSection,
-            titleSection,
-            buttonSection,
-            textSection, // textSection ditambahkan setelah buttonSection
-          ],
-        ),
-      ),
-    );
-  }
+ // Halaman Detail Item
+'/item': (context) => const ItemPage(), // Boleh const di sini jika ItemPage konstan
+},
+);
+}
 }
