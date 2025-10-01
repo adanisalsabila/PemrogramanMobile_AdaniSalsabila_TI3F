@@ -1135,7 +1135,7 @@ class MyApp extends StatelessWidget {
 
     // --- Praktikum 4: imageSection (Langkah 2) ---
     Widget imageSection = Image.asset(
-      'images/gunung_batu.jpg', // Ganti dengan nama file gambar Anda
+      'assets/semeru.jpg', // Ganti dengan nama file gambar Anda
       width: 600,
       height: 240,
       fit: BoxFit.cover, // Gambar menutupi seluruh kotak rendernya
@@ -1153,7 +1153,7 @@ class MyApp extends StatelessWidget {
         ),
         // Langkah 2: Tambahkan variabel textSection ke body
         // Menggunakan Column untuk menumpuk semua bagian secara vertikal
-        body: Column(
+        body: ListView(
           children: [
             imageSection,
             titleSection,
