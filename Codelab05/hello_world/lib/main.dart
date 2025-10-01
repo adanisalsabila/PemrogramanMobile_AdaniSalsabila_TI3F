@@ -1043,8 +1043,6 @@
 //   }
 // }
 
-
-
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -1052,23 +1050,46 @@ void main() => runApp(const MyApp());
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // Langkah 1: Buat method Column _buildButtonColumn
+  Column _buildButtonColumn(Color color, IconData icon, String label) {
+    return Column(
+      // Atur agar kolom mengambil ruang minimum yang diperlukan di sumbu vertikal
+      mainAxisSize: MainAxisSize.min,
+      // Posisikan anak-anak di tengah sumbu vertikal
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // Widget Icon dengan warna yang ditentukan
+        Icon(icon, color: color),
+        // Container untuk memberi jarak antara Icon dan Text
+        Container(
+          margin: const EdgeInsets.only(top: 8),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              color: color, // Teks menggunakan warna yang ditentukan
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Definisi titleSection (Langkah 4)
+    // Tentukan warna primer berdasarkan tema aplikasi
+    Color color = Theme.of(context).primaryColor;
+
+    // --- Praktikum 1: titleSection ---
     Widget titleSection = Container(
-      // Seluruh baris ada di dalam Container dan beri padding di sepanjang setiap tepinya sebesar 32 piksel.
       padding: const EdgeInsets.all(32),
       child: Row(
         children: [
           Expanded(
-            /* soal 1 */
-            // Letakkan widget Column di dalam widget Expanded agar menyesuaikan ruang yang tersisa di dalam widget Row.
-            // Tambahkan properti crossAxisAlignment ke CrossAxisAlignment.start.
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                /* soal 2 */
-                // Letakkan baris pertama teks di dalam Container sehingga memungkinkan Anda untuk menambahkan padding = 8.
                 Container(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: const Text(
@@ -1078,7 +1099,6 @@ class MyApp extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Teks ‘Batu, Malang, Indonesia' di dalam Column, set warna menjadi abu-abu.
                 Text(
                   'Batu, Malang, Indonesia',
                   style: TextStyle(
@@ -1088,8 +1108,6 @@ class MyApp extends StatelessWidget {
               ],
             ),
           ),
-          /* soal 3 */
-          // Dua item terakhir di baris judul adalah ikon bintang, set dengan warna merah, dan teks "41".
           Icon(
             Icons.star,
             color: Colors.red[500],
@@ -1099,16 +1117,37 @@ class MyApp extends StatelessWidget {
       ),
     );
 
-    // Kode utama MaterialApp dan Scaffold (Langkah 2)
+    // Langkah 2: Buat widget buttonSection
+    Widget buttonSection = Row(
+      // MainAxisAlignment.spaceEvenly memberikan ruang kosong yang merata
+      // sebelum, di antara, dan setelah setiap kolom tombol.
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        _buildButtonColumn(color, Icons.call, 'CALL'),
+        _buildButtonColumn(color, Icons.near_me, 'ROUTE'),
+        _buildButtonColumn(color, Icons.share, 'SHARE'),
+      ],
+    );
+
+    // --- Layout Utama (Scaffold) ---
     return MaterialApp(
-      // Ganti Nama dan NIM Anda di sini
       title: 'Flutter layout Adani Salsabila',
+      // Mengatur warna primer tema menjadi biru agar tombol terlihat (default Flutter)
+      theme: ThemeData(
+        primarySwatch: Colors.blue, 
+      ),
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Flutter layout Adani Salsabila - 2341720123'),
         ),
-        body: Center(
-          child: titleSection,
+        // Langkah 3: Tambah button section ke body
+        // Menggunakan Column untuk menumpuk bagian Judul dan bagian Tombol secara vertikal
+        body: Column(
+          children: [
+            titleSection,
+            buttonSection,
+            // Widget lain (Text Section, Image) akan ditambahkan di praktikum berikutnya
+          ],
         ),
       ),
     );
