@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:async'; 
+import 'dart:async'; // dart:async sudah mencakup class Completer
 
 void main() => runApp(const MyApp());
 
@@ -30,56 +30,72 @@ class _FuturePageState extends State<FuturePage> {
   // Variabel untuk mengontrol status loading
   bool isDataLoading = false;
 
-  // Praktikum 1: Method untuk mengambil data (Tidak digunakan di onPressed langkah 3, tapi tetap dipertahankan)
+  // Praktikum 1: Method untuk mengambil data (Tidak digunakan)
   Future<http.Response> getData() {
     const String path = 'https://www.googleapis.com/books/v1/volumes/pJmyEAAAQBAJ'; 
     final Uri uri = Uri.parse(path);
     return http.get(uri);
   }
 
-  // Langkah 1: Tiga method asynchronous
+  // Praktikum 2: Method async/await (Tidak digunakan di Praktikum 3)
   Future<int> returnOneAsync() async {
-    // Menunggu 3 detik sebelum mengembalikan nilai 1
     await Future.delayed(const Duration(seconds: 3));
     return 1;
   }
 
   Future<int> returnTwoAsync() async {
-    // Menunggu 3 detik sebelum mengembalikan nilai 2
     await Future.delayed(const Duration(seconds: 3));
     return 2;
   }
 
   Future<int> returnThreeAsync() async {
-    // Menunggu 3 detik sebelum mengembalikan nilai 3
     await Future.delayed(const Duration(seconds: 3));
     return 3;
   }
 
-  // Langkah 2: Method count() menggunakan async/await
-  // Method ini akan menunggu masing-masing Future selesai secara berurutan.
   Future<int> count() async {
     int total = 0;
-    
-    // await: Menunggu returnOneAsync() selesai (3 detik)
     total += await returnOneAsync();
-    
-    // await: Menunggu returnTwoAsync() selesai (3 detik)
     total += await returnTwoAsync();
-    
-    // await: Menunggu returnThreeAsync() selesai (3 detik)
     total += await returnThreeAsync();
-    
-    // Total delay: 3s + 3s + 3s = 9 detik
     return total;
   }
+  
+  // =======================================================
+  // Praktikum 3: Menggunakan Completer
+  // Langkah 2: Tambahkan variabel late Completer
+  late Completer completer;
 
+  // Langkah 2: Method getNumber()
+  Future getNumber() {
+    // 1. Buat object Completer baru yang akan menghasilkan tipe data <int>
+    completer = Completer<int>();
+    // 2. Panggil method yang akan menjalankan operasi asinkron
+    calculate();
+    // 3. Kembalikan object Future yang terkait dengan Completer ini
+    return completer.future;
+  }
+
+  // Langkah 5: Method calculate() diubah untuk memicu error (menjawab Soal 6)
+  Future calculate() async {
+    await Future.delayed(const Duration(seconds : 3)); 
+    
+    // --- SKENARIO 1: SUKSES (Langkah 2) ---
+    // Ganti komentar di bawah jika ingin mencoba skenario sukses
+    // completer.complete(42); 
+
+    // --- SKENARIO 2: ERROR (Langkah 5) ---
+    // Memanggil completeError() akan menolak (reject) Future yang dikembalikan getNumber()
+    completer.completeError(Exception('Failed to calculate the secret number! (Intentional Error)')); 
+  }
+  // =======================================================
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Adani Salsabila - Codelab11 - Async Programming'),
+        backgroundColor: Colors.blueGrey,
       ),
       body: Center(
         child: Column(
@@ -94,62 +110,75 @@ class _FuturePageState extends State<FuturePage> {
                         child: Text(
                           result,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 14),
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                         ),
                       ),
               ),
             ),
-            // Langkah 3: Mengubah isi onPressed()
+            
             ElevatedButton(
-              onPressed: () async { // Tambahkan 'async' di sini!
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                backgroundColor: Colors.blueGrey[700],
+                foregroundColor: Colors.white,
+              ),
+              onPressed: () { 
                 setState(() {
-                  isDataLoading = true; // Mulai loading
-                  result = 'Counting... Please wait 9 seconds.'; 
+                  isDataLoading = true; 
+                  // Sesuaikan pesan loading dengan skenario error (3 detik)
+                  result = 'Calculating with Completer... Waiting 3 seconds for result/error.'; 
                 });
                 
-                // Praktikum 1 code: (dikonversi ke comment)
-                /*
-                getData().then((response) {
-                  if (response.statusCode == 200) {
-                    setState(() {
-                      result = response.body.substring(0, 500) + '... (data terpotong)'; 
-                      isDataLoading = false; 
-                    });
-                  } else {
-                    setState(() {
-                      result = 'Gagal memuat data. Status: ${response.statusCode}';
-                      isDataLoading = false;
-                    });
-                  }
-                }).catchError((error) {
+                // Praktikum 3, Langkah 6: Menggunakan getNumber() dengan then dan catchError
+                getNumber().then((value) {
+                  // Blok ini akan dipanggil jika completer.complete(value) dipanggil (Skenario Sukses)
                   setState(() {
-                    result = 'Error koneksi terjadi: $error';
+                    result = 'Total: $value (Success from Completer)';
+                    isDataLoading = false;
+                  });
+                }).catchError((e) {
+                  // Blok ini akan dipanggil jika completer.completeError(error) dipanggil (Skenario Error)
+                  setState(() {
+                    result = 'Error from Completer: ${e.toString()}';
                     isDataLoading = false;
                   });
                 });
-                */
-
-                // Praktikum 2 code: Menggunakan async/await
-                try {
-                  // Gunakan await untuk menunggu hasil dari method count()
-                  int total = await count();
-                  
-                  // Setelah count() selesai (setelah 9 detik), perbarui UI
-                  setState(() {
-                    result = 'Total: $total';
-                    isDataLoading = false; 
-                  });
-                } catch (e) {
-                  // Penanganan error menggunakan try-catch di method async
-                  setState(() {
-                    result = 'Error: $e';
-                    isDataLoading = false;
-                  });
-                }
 
               },
-              child: const Text('Count Async'),
+              child: const Text('Calculate with Completer (Praktikum 3)'),
             ),
+            
+            const SizedBox(height: 20),
+            
+            // Tombol Praktikum 2 (dijadikan referensi)
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                backgroundColor: Colors.grey[400],
+                foregroundColor: Colors.black87,
+              ),
+              onPressed: () async {
+                 setState(() {
+                   isDataLoading = true; 
+                   result = 'Counting Async/Await... Please wait 9 seconds.'; 
+                 });
+                 
+                 try {
+                   int total = await count();
+                   setState(() {
+                     result = 'Total: $total (Success from Async/Await)';
+                     isDataLoading = false; 
+                   });
+                 } catch (e) {
+                   setState(() {
+                     result = 'Error: $e';
+                     isDataLoading = false;
+                   });
+                 }
+              },
+              child: const Text('Count Async/Await (Praktikum 2)'),
+            ),
+            
             const Spacer(),
           ],
         ),
