@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:async'; // dart:async sudah mencakup class Completer
+import 'dart:async'; // dart:async (untuk Future, Completer)
+// import 'package:async/async.dart'; // FutureGroup memerlukan impor ini
 
 void main() => runApp(const MyApp());
 
@@ -37,7 +38,7 @@ class _FuturePageState extends State<FuturePage> {
     return http.get(uri);
   }
 
-  // Praktikum 2: Method async/await (Tidak digunakan di Praktikum 3)
+  // Praktikum 2: Tiga method async/await yang masing-masing 3 detik
   Future<int> returnOneAsync() async {
     await Future.delayed(const Duration(seconds: 3));
     return 1;
@@ -53,42 +54,60 @@ class _FuturePageState extends State<FuturePage> {
     return 3;
   }
 
+  // Praktikum 2: Metode yang menjalankan Future secara BERURUTAN (Total 9 detik)
   Future<int> count() async {
     int total = 0;
-    total += await returnOneAsync();
-    total += await returnTwoAsync();
-    total += await returnThreeAsync();
+    total += await returnOneAsync(); // 3s
+    total += await returnTwoAsync(); // + 3s
+    total += await returnThreeAsync(); // + 3s
     return total;
   }
   
   // =======================================================
-  // Praktikum 3: Menggunakan Completer
-  // Langkah 2: Tambahkan variabel late Completer
+  // Praktikum 3: Menggunakan Completer (Kode dipertahankan, tapi tidak digunakan di Praktikum 4)
   late Completer completer;
 
-  // Langkah 2: Method getNumber()
   Future getNumber() {
-    // 1. Buat object Completer baru yang akan menghasilkan tipe data <int>
     completer = Completer<int>();
-    // 2. Panggil method yang akan menjalankan operasi asinkron
     calculate();
-    // 3. Kembalikan object Future yang terkait dengan Completer ini
     return completer.future;
   }
 
-  // Langkah 5: Method calculate() diubah untuk memicu error (menjawab Soal 6)
   Future calculate() async {
     await Future.delayed(const Duration(seconds : 3)); 
-    
-    // --- SKENARIO 1: SUKSES (Langkah 2) ---
-    // Ganti komentar di bawah jika ingin mencoba skenario sukses
-    // completer.complete(42); 
-
-    // --- SKENARIO 2: ERROR (Langkah 5) ---
-    // Memanggil completeError() akan menolak (reject) Future yang dikembalikan getNumber()
-    completer.completeError(Exception('Failed to calculate the secret number! (Intentional Error)')); 
+    completer.complete(42); 
   }
   // =======================================================
+  
+  // Praktikum 4, Langkah 1: Memanggil Future secara PARALEL menggunakan Future.wait
+  // Catatan: Future.wait adalah cara standar di Dart untuk operasi paralel, 
+  // menggantikan FutureGroup untuk kasus sederhana ini.
+  Future<int> countParalel() async {
+    // Jalankan ketiga Future (masing-masing 3 detik) secara bersamaan/paralel.
+    // Future.wait akan menunggu hingga SEMUA Future dalam List selesai.
+    // Total waktu tunggu: max(3s, 3s, 3s) = 3 detik.
+    final results = await Future.wait<int>([
+      returnOneAsync(),
+      returnTwoAsync(),
+      returnThreeAsync(),
+    ]);
+
+    // Jumlahkan hasil yang dikembalikan dalam bentuk List<int>
+    int total = results.reduce((sum, element) => sum + element);
+    
+    return total; // Hasilnya (1 + 2 + 3) = 6
+  }
+
+  // Praktikum 4, Langkah 4: Menggunakan Future.wait secara langsung (hanya untuk perbandingan)
+  // Logic yang sama dengan countParalel(), hanya penamaan variabel yang berbeda.
+  /*
+  final futures = Future.wait<int>([
+    returnOneAsync(),
+    returnTwoAsync(),
+    returnThreeAsync(),
+  ]);
+  */
+
 
   @override
   Widget build(BuildContext context) {
@@ -116,57 +135,58 @@ class _FuturePageState extends State<FuturePage> {
               ),
             ),
             
+            // Praktikum 4, Langkah 2: Tombol untuk countParalel()
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                backgroundColor: Colors.blueGrey[700],
+                backgroundColor: Colors.indigo[800], // Warna baru untuk paralel
                 foregroundColor: Colors.white,
               ),
-              onPressed: () { 
+              onPressed: () async { // Tambahkan async di sini!
                 setState(() {
                   isDataLoading = true; 
-                  // Sesuaikan pesan loading dengan skenario error (3 detik)
-                  result = 'Calculating with Completer... Waiting 3 seconds for result/error.'; 
+                  // Sesuaikan pesan loading dengan waktu PARALEL (hanya 3 detik)
+                  result = 'Counting PARALEL... Please wait 3 seconds.'; 
                 });
                 
-                // Praktikum 3, Langkah 6: Menggunakan getNumber() dengan then dan catchError
-                getNumber().then((value) {
-                  // Blok ini akan dipanggil jika completer.complete(value) dipanggil (Skenario Sukses)
+                try {
+                  // Panggil method paralel (Langkah 2)
+                  int total = await countParalel(); 
+                  
                   setState(() {
-                    result = 'Total: $value (Success from Completer)';
+                    result = 'Total Paralel: $total (Time saved: 6 seconds!)';
                     isDataLoading = false;
                   });
-                }).catchError((e) {
-                  // Blok ini akan dipanggil jika completer.completeError(error) dipanggil (Skenario Error)
+                } catch (e) {
                   setState(() {
-                    result = 'Error from Completer: ${e.toString()}';
+                    result = 'Error Paralel: ${e.toString()}';
                     isDataLoading = false;
                   });
-                });
+                }
 
               },
-              child: const Text('Calculate with Completer (Praktikum 3)'),
+              child: const Text('Count Paralel (Praktikum 4)'),
             ),
             
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             
-            // Tombol Praktikum 2 (dijadikan referensi)
+            // Tombol Praktikum 2 (Serial: 9 detik)
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                backgroundColor: Colors.grey[400],
-                foregroundColor: Colors.black87,
+                backgroundColor: Colors.grey[700], // Warna gelap untuk Serial
+                foregroundColor: Colors.white,
               ),
               onPressed: () async {
                  setState(() {
                    isDataLoading = true; 
-                   result = 'Counting Async/Await... Please wait 9 seconds.'; 
+                   result = 'Counting SERIAL... Please wait 9 seconds.'; 
                  });
                  
                  try {
                    int total = await count();
                    setState(() {
-                     result = 'Total: $total (Success from Async/Await)';
+                     result = 'Total Serial: $total (9 seconds)';
                      isDataLoading = false; 
                    });
                  } catch (e) {
@@ -176,7 +196,38 @@ class _FuturePageState extends State<FuturePage> {
                    });
                  }
               },
-              child: const Text('Count Async/Await (Praktikum 2)'),
+              child: const Text('Count Serial (Praktikum 2)'),
+            ),
+            
+            const SizedBox(height: 10),
+            
+            // Tombol Praktikum 3 (Completer: 3 detik)
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                backgroundColor: Colors.blueGrey[700],
+                foregroundColor: Colors.white,
+              ),
+              onPressed: () { 
+                setState(() {
+                  isDataLoading = true; 
+                  result = 'Calculating with Completer... Waiting 3 seconds for result.'; 
+                });
+                
+                getNumber().then((value) {
+                  setState(() {
+                    result = 'Total Completer: $value';
+                    isDataLoading = false;
+                  });
+                }).catchError((e) {
+                  setState(() {
+                    result = 'Error from Completer: ${e.toString()}';
+                    isDataLoading = false;
+                  });
+                });
+
+              },
+              child: const Text('Calculate with Completer (Praktikum 3)'),
             ),
             
             const Spacer(),
