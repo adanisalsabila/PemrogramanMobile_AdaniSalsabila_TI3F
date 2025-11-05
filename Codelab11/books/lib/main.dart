@@ -64,7 +64,7 @@ class _FuturePageState extends State<FuturePage> {
   }
   
   // =======================================================
-  // Praktikum 3: Menggunakan Completer (Kode dipertahankan, tapi tidak digunakan di Praktikum 4)
+  // Praktikum 3: Menggunakan Completer (Kode dipertahankan)
   late Completer completer;
 
   Future getNumber() {
@@ -79,34 +79,43 @@ class _FuturePageState extends State<FuturePage> {
   }
   // =======================================================
   
-  // Praktikum 4, Langkah 1: Memanggil Future secara PARALEL menggunakan Future.wait
-  // Catatan: Future.wait adalah cara standar di Dart untuk operasi paralel, 
-  // menggantikan FutureGroup untuk kasus sederhana ini.
+  // Praktikum 4: Memanggil Future secara PARALEL
   Future<int> countParalel() async {
-    // Jalankan ketiga Future (masing-masing 3 detik) secara bersamaan/paralel.
-    // Future.wait akan menunggu hingga SEMUA Future dalam List selesai.
-    // Total waktu tunggu: max(3s, 3s, 3s) = 3 detik.
     final results = await Future.wait<int>([
       returnOneAsync(),
       returnTwoAsync(),
       returnThreeAsync(),
     ]);
-
-    // Jumlahkan hasil yang dikembalikan dalam bentuk List<int>
     int total = results.reduce((sum, element) => sum + element);
-    
-    return total; // Hasilnya (1 + 2 + 3) = 6
+    return total;
   }
 
-  // Praktikum 4, Langkah 4: Menggunakan Future.wait secara langsung (hanya untuk perbandingan)
-  // Logic yang sama dengan countParalel(), hanya penamaan variabel yang berbeda.
-  /*
-  final futures = Future.wait<int>([
-    returnOneAsync(),
-    returnTwoAsync(),
-    returnThreeAsync(),
-  ]);
-  */
+  // =======================================================
+  // Praktikum 5: Menangani Respon Error pada Async Code
+  
+  // Langkah 1: Method yang akan melempar error
+  Future<String> getError() async {
+    await Future.delayed(const Duration(seconds: 2));
+    throw Exception('Simulasi Kegagalan Data (Praktikum 5)');
+  }
+
+  // Langkah 4: Method untuk menangani error menggunakan pola async/await
+  Future<void> handleErrorAsync() async {
+    try {
+      // Panggil Future yang berpotensi gagal
+      await getError();
+    } catch (e) {
+      // Tangkap error dan perbarui UI
+      setState(() {
+        result = 'Error Ditangani (Async/Await): ${e.toString()}';
+        isDataLoading = false;
+      });
+      // Menampilkan di console untuk konfirmasi bahwa error tertangani
+      print('Complete: Error tertangani dengan async/await'); 
+    }
+  }
+  
+  // =======================================================
 
 
   @override
@@ -135,22 +144,76 @@ class _FuturePageState extends State<FuturePage> {
               ),
             ),
             
-            // Praktikum 4, Langkah 2: Tombol untuk countParalel()
+            // Praktikum 5, Langkah 2: Menangani error menggunakan .catchError()
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                backgroundColor: Colors.indigo[800], // Warna baru untuk paralel
+                backgroundColor: Colors.red[800], // Warna untuk error handling
                 foregroundColor: Colors.white,
               ),
-              onPressed: () async { // Tambahkan async di sini!
+              onPressed: () { 
                 setState(() {
                   isDataLoading = true; 
-                  // Sesuaikan pesan loading dengan waktu PARALEL (hanya 3 detik)
+                  result = 'Loading... Menunggu 2 detik untuk hasil error.'; 
+                });
+                
+                // Panggil Future yang berpotensi gagal, dan gunakan .catchError()
+                getError().then((value) {
+                  // Blok ini hanya dieksekusi jika sukses (tidak akan dieksekusi)
+                  setState(() {
+                    result = 'Sukses: $value';
+                    isDataLoading = false;
+                  });
+                }).catchError((e) {
+                  // Blok ini dieksekusi karena ada error
+                  setState(() {
+                    result = 'Error Ditangani (.catchError): ${e.toString()}';
+                    isDataLoading = false;
+                  });
+                  // Menampilkan di console
+                  print('Complete: Error tertangani dengan .catchError()'); 
+                });
+
+              },
+              child: const Text('GO! (CatchError)'),
+            ),
+
+            const SizedBox(height: 10),
+            
+            // Praktikum 5, Soal 10: Menangani error menggunakan handleErrorAsync (async/await)
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                backgroundColor: Colors.deepOrange[800], // Warna untuk async/await error handling
+                foregroundColor: Colors.white,
+              ),
+              onPressed: () async {
+                 setState(() {
+                   isDataLoading = true; 
+                   result = 'Loading... Menunggu 2 detik untuk hasil error.'; 
+                 });
+                 // Panggil method yang sudah menangani error menggunakan try-catch
+                 await handleErrorAsync();
+              },
+              child: const Text('GO! (Async/Await)'),
+            ),
+            
+            const SizedBox(height: 20),
+
+            // Tombol Praktikum 4 (Paralel: 3 detik)
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                backgroundColor: Colors.indigo[800],
+                foregroundColor: Colors.white,
+              ),
+              onPressed: () async {
+                setState(() {
+                  isDataLoading = true; 
                   result = 'Counting PARALEL... Please wait 3 seconds.'; 
                 });
                 
                 try {
-                  // Panggil method paralel (Langkah 2)
                   int total = await countParalel(); 
                   
                   setState(() {
@@ -163,71 +226,8 @@ class _FuturePageState extends State<FuturePage> {
                     isDataLoading = false;
                   });
                 }
-
               },
               child: const Text('Count Paralel (Praktikum 4)'),
-            ),
-            
-            const SizedBox(height: 10),
-            
-            // Tombol Praktikum 2 (Serial: 9 detik)
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                backgroundColor: Colors.grey[700], // Warna gelap untuk Serial
-                foregroundColor: Colors.white,
-              ),
-              onPressed: () async {
-                 setState(() {
-                   isDataLoading = true; 
-                   result = 'Counting SERIAL... Please wait 9 seconds.'; 
-                 });
-                 
-                 try {
-                   int total = await count();
-                   setState(() {
-                     result = 'Total Serial: $total (9 seconds)';
-                     isDataLoading = false; 
-                   });
-                 } catch (e) {
-                   setState(() {
-                     result = 'Error: $e';
-                     isDataLoading = false;
-                   });
-                 }
-              },
-              child: const Text('Count Serial (Praktikum 2)'),
-            ),
-            
-            const SizedBox(height: 10),
-            
-            // Tombol Praktikum 3 (Completer: 3 detik)
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                backgroundColor: Colors.blueGrey[700],
-                foregroundColor: Colors.white,
-              ),
-              onPressed: () { 
-                setState(() {
-                  isDataLoading = true; 
-                  result = 'Calculating with Completer... Waiting 3 seconds for result.'; 
-                });
-                
-                getNumber().then((value) {
-                  setState(() {
-                    result = 'Total Completer: $value';
-                    isDataLoading = false;
-                  });
-                }).catchError((e) {
-                  setState(() {
-                    result = 'Error from Completer: ${e.toString()}';
-                    isDataLoading = false;
-                  });
-                });
-
-              },
-              child: const Text('Calculate with Completer (Praktikum 3)'),
             ),
             
             const Spacer(),
