@@ -1,9 +1,8 @@
 
-# ✨ Halo, Saya Adani Salsabila! ✨
+# ✨ adani salsabila's ✨
 
 ---
 
-## 👩‍💻 Data Diri Singkat
 
 <table align="center">
   <tr>
