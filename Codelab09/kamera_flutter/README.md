@@ -1,16 +1,17 @@
-# kamera_flutter
+# ADANI SALSABILA - TI 3F - 2341720123  
 
-A new Flutter project.
+# PRAKTIKUM CODELAB09
 
-## Getting Started
+# Praktikum 1: Mengambil Foto dengan Kamera di Flutter  
 
-This project is a starting point for a Flutter application.
+![kode](img/takepicture.png)  
 
-A few resources to get you started if this is your first Flutter project:
+![kode](img/displaypicture.png)  
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+hasil :     
+
+
+![hasil](img/praktikum1a.png)   
+
+![hasil](img/praktikum1.png)   
