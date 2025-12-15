@@ -15,3 +15,7 @@ hasil :
 ![hasil](img/praktikum1a.png)   
 
 ![hasil](img/praktikum1.png)   
+
+# Praktikum 2: Membuat photo filter carousel  
+
+
