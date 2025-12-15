@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async'; // Diperlukan untuk Completer
+import 'package:async/async.dart'; // Wajib ada untuk FutureGroup
 
 
 void main() {
@@ -131,6 +132,27 @@ class _AsyncScreenState extends State<AsyncScreen> {
     }
   }
 
+  void returnFG() {
+    // Membuat FutureGroup
+    FutureGroup<int> futureGroup = FutureGroup<int>();
+    
+    // Menambahkan Future ke dalam group
+    futureGroup.add(returnOneAsync());
+    futureGroup.add(returnTwoAsync());
+    futureGroup.add(returnThreeAsync());
+    
+    // Menutup group (tanda tidak ada future lagi yang akan ditambahkan)
+    futureGroup.close();
+
+    // Menerima hasil ketika semua future selesai
+    futureGroup.future.then((List<int> values) {
+      int total = values.fold(0, (a, b) => a + b); // Menjumlahkan hasil: 1+2+3
+      setState(() {
+        result = total.toString();
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -141,20 +163,27 @@ class _AsyncScreenState extends State<AsyncScreen> {
           children: [
             Text(result, style: const TextStyle(fontSize: 20), textAlign: TextAlign.center),
             const SizedBox(height: 20),
+
             ElevatedButton(
   onPressed: () {
-    getNumber().then((value) {
-      setState(() {
-        result = value.toString();
-      });
-    }).catchError((e) {
-      setState(() {
-        result = 'An error occurred';
-      });
-    });
+    returnFG();
   },
-  child: const Text('Praktikum 3: Completer Error'),
+  child: const Text('Praktikum 4: FutureGroup'),
 ),
+//             ElevatedButton(
+//   onPressed: () {
+//     getNumber().then((value) {
+//       setState(() {
+//         result = value.toString();
+//       });
+//     }).catchError((e) {
+//       setState(() {
+//         result = 'An error occurred';
+//       });
+//     });
+//   },
+//   child: const Text('Praktikum 3: Completer Error'),
+// ),
 // ElevatedButton(
 //   onPressed: () {
 //     getNumber().then((value) {

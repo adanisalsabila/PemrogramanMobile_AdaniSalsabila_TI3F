@@ -69,6 +69,17 @@ Pada Langkah 6, kita menambahkan blok .catchError(...) setelah .then(). Ini berf
 
 ![hasil](img/kodepraktikum4.png)      
 
+![hasil](img/praktikum4.png)      
+
+Jawaban Soal 8
+Pertanyaan: Jelaskan maksud perbedaan kode langkah 1 dan 4!
+
+Jawaban:
+
+Langkah 1 (FutureGroup): Menggunakan FutureGroup dari package async. Class ini lebih fleksibel jika kita memiliki skenario yang kompleks di mana jumlah future yang ingin dijalankan belum diketahui di awal. Kita bisa menggunakan .add() berulang kali di berbagai bagian kode logika, dan baru memanggil .close() saat kita yakin semua future sudah ditambahkan. Ini berguna untuk kasus dynamic batch processing.
+
+Langkah 4 (Future.wait): Menggunakan Future.wait yang merupakan bawaan dari Dart (dart:async). Ini adalah cara yang lebih bersih, ringkas, dan standar untuk menangani kumpulan future yang sudah fix (tetap) dan diketahui jumlahnya sejak awal. Kita langsung memasukkan List future ke dalam konstruktor. Kode menjadi lebih pendek karena tidak perlu inisialisasi group, add manual, dan close manual. Untuk kasus praktikum ini (hanya 3 fungsi tetap), Future.wait sebenarnya lebih efisien secara penulisan kode.
+
 # PRAKTIKUM 5: Menangani Respon Error pada Async Code
 
 ![hasil](img/kodepraktikum5.png)      
