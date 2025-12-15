@@ -1,0 +1,132 @@
+import 'package:flutter/material.dart';
+import 'dart:async'; // Diperlukan untuk Completer
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Async Lab',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const AsyncScreen(),
+    );
+  }
+}
+
+class AsyncScreen extends StatefulWidget {
+  const AsyncScreen({super.key});
+
+  @override
+  State<AsyncScreen> createState() => _AsyncScreenState();
+}
+
+class _AsyncScreenState extends State<AsyncScreen> {
+  String result = 'Belum ada data';
+
+  Future<void> fetchData() {
+    return Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        result = 'Data berhasil diunduh (Simulasi API)';
+      });
+    });
+  }
+
+  // Future<String> mockApi() {
+  //   return Future.delayed(const Duration(seconds: 2), () {
+  //     return 'Data dari Async/Await';
+  //   });
+  // }
+
+  // Future<void> getDataWithAsync() async {
+  //   setState(() {
+  //     result = 'Menunggu data...';
+  //   });
+    
+  //   // Menunggu hasil mockApi selesai sebelum lanjut ke baris berikutnya
+  //   String data = await mockApi(); 
+    
+  //   setState(() {
+  //     result = data;
+  //   });
+  // }
+
+  // Future<void> completerExample() async {
+  //   Completer<String> completer = Completer<String>();
+
+  //   // Simulasi proses yang selesai setelah 3 detik
+  //   Future.delayed(const Duration(seconds: 3), () {
+  //     completer.complete('Completer selesai!');
+  //   });
+
+  //   setState(() {
+  //     result = 'Menunggu Completer...';
+  //   });
+
+  //   String value = await completer.future;
+  //   setState(() {
+  //     result = value;
+  //   });
+  // }
+
+  Future<int> returnOneAsync() async {
+    await Future.delayed(const Duration(seconds: 3));
+    return 1;
+  }
+
+  Future<int> returnTwoAsync() async {
+    await Future.delayed(const Duration(seconds: 3));
+    return 2;
+  }
+
+  Future<int> returnThreeAsync() async {
+    await Future.delayed(const Duration(seconds: 3));
+    return 3;
+  }
+
+  Future<void> count() async {
+    int total = 0;
+    
+    // Mengambil nilai 1, butuh waktu 3 detik
+    total = await returnOneAsync();
+    
+    // Menambah nilai 2, butuh waktu 3 detik lagi
+    total += await returnTwoAsync();
+    
+    // Menambah nilai 3, butuh waktu 3 detik lagi
+    total += await returnThreeAsync();
+
+    setState(() {
+      result = total.toString(); // Akan menampilkan angka 6
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Asynchronous Programming')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(result, style: const TextStyle(fontSize: 20), textAlign: TextAlign.center),
+            const SizedBox(height: 20),
+            ElevatedButton(
+  onPressed: () {
+    fetchData();
+    count();
+  },
+  child: const Text('Praktikum 2: Hitung Angka'),
+),
+//   child: const Text('Praktikum 1: Unduh Data'),
+// ),
+          ],
+        ),
+      ),
+    );
+  }
+}
