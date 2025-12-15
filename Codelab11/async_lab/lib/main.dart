@@ -198,8 +198,30 @@
 // }
 
 
+// import 'package:flutter/material.dart';
+// import 'geolocation.dart'; // Jangan lupa import ini
+
+// void main() {
+//   runApp(const MyApp());
+// }
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Flutter Demo',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: const LocationScreen(), // Panggil screen baru di sini
+//     );
+//   }
+// }
+
 import 'package:flutter/material.dart';
-import 'geolocation.dart'; // Jangan lupa import ini
+import 'navigation_first.dart'; // Import file baru
 
 void main() {
   runApp(const MyApp());
@@ -215,7 +237,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LocationScreen(), // Panggil screen baru di sini
+      home: const NavigationFirst(), // Ganti home ke sini
     );
   }
 }

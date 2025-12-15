@@ -136,5 +136,40 @@ Pada praktikum sebelumnya (Praktikum 6), kita memaksa UI berubah secara manual m
 
 Pada praktikum ini (Praktikum 7), kita tidak lagi memanggil setState(). Widget FutureBuilder secara otomatis mendengarkan status dari future (waiting, done). Ketika status berubah (misal dari loading ke selesai), FutureBuilder otomatis membangun ulang (rebuild) widget di dalamnya. Ini membuat kode lebih bersih (clean code) dan reaktif.
 
+# PRAKTIKUM 8: Navigation route dengan Future Function     
+
+![hasil](img/praktikum8.png)      
+
+![hasil](img/praktikum8b.png)      
+
+![hasil](img/praktikum8c.png)      
+
+![hasil](img/praktikum8d.png)      
+
+![hasil](img/praktikum8e.png)      
+
+Pertanyaan: Cobalah klik setiap button, apa yang terjadi? Mengapa demikian? Gantilah 3 warna pada langkah 5 dengan warna favorit Anda!
+
+Jawaban:
+
+Apa yang terjadi: Ketika tombol warna di halaman kedua (NavigationSecond) diklik, warna background di halaman pertama (NavigationFirst) berubah sesuai dengan warna tombol yang ditekan.
+
+Mengapa demikian: Hal ini terjadi karena konsep Navigation Route dengan Future:
+
+Pada NavigationFirst, kita memanggil Navigator.push dengan kata kunci await. Artinya, eksekusi kode di baris tersebut akan "berhenti sementara" (pause) menunggu sampai halaman kedua ditutup.
+
+Pada NavigationSecond, ketika tombol ditekan, kita memanggil Navigator.pop(context, color). Fungsi ini menutup halaman kedua sekaligus mengirimkan data objek color kembali ke pemanggilnya.
+
+Data warna tersebut diterima oleh variabel color di NavigationFirst.
+
+Kemudian setState({}) dipanggil, yang menyebabkan Flutter membangun ulang (rebuild) UI NavigationFirst dengan warna latar belakang yang baru.
+
+Warna yang diganti: Saya telah mengganti warna tombol menjadi:
+
+Colors.red (Merah)
+
+Colors.green (Hijau)
+
+Colors.purple (Ungu)
 
 
