@@ -57,6 +57,21 @@ Langkah 15: Kita sengaja memanggil numberStream.addError() saat tombol ditekan u
 
 # PRAKTIKUM 3 : Injeksi data ke streams
 
+![hasil](img/praktikum3.png)      
 
+![hasil](img/praktikum3b.png)       
+
+Soal 8: Jelaskan maksud kode langkah 1-3 tersebut!
+
+Jawaban:
+
+Langkah 1: Kita mendeklarasikan variabel transformer bertipe StreamTransformer. Ini adalah objek yang akan digunakan untuk memanipulasi data stream sebelum data tersebut sampai ke listener (UI).
+
+Langkah 2: Kita menginisialisasi transformer dengan logika pemrosesan data. Menggunakan method fromHandlers, kita mendefinisikan fungsi handleData. Di sinilah manipulasi terjadi: setiap data integer (value) yang masuk akan dikalikan dengan 10 (value * 10) sebelum diteruskan kembali ke sink (sink.add). Jadi, jika inputnya 5, outputnya menjadi 50.
+
+Langkah 3: Kita menerapkan transformer tersebut ke stream utama menggunakan perintah .transform(transformer). Ini seperti menyambungkan pipa filter. Alur datanya menjadi: StreamController (Input) -> Transformer (Dikali 10) -> Listen (Update UI). Hasilnya, data yang diterima oleh listen dan ditampilkan di layar adalah data yang sudah dimodifikasi (0-90), bukan data mentah (0-9).
+
+ 
+ # PRAKTIKUM 4 : Subscribe ke stream events      
 
  
