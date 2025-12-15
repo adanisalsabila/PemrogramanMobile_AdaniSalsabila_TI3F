@@ -92,3 +92,27 @@ Langkah 6 (dispose): Method dispose() dipanggil oleh Flutter ketika widget ini d
 
 Langkah 8 (addRandomNumber): Method ini bertugas membuat angka acak (0-9) dan memasukkannya ke dalam stream menggunakan addNumberToSink. Ini adalah sisi Producer dari stream. Data yang dimasukkan di sini akan diproses oleh transformer (dikali 10) dan kemudian diterima oleh listener di langkah 2 untuk memperbarui UI. (Catatan tambahan: Sebaiknya kita juga mengecek apakah controller sudah ditutup atau belum sebelum menambah data agar tidak terjadi error unhandled exception).
 
+
+# PRAKTIKUM 5 : Multiple stream subscriptions
+
+![hasil](img/praktikum5.png)      
+
+Soal 10: Jelaskan mengapa error itu bisa terjadi?
+
+Jawaban: Error tersebut (Bad state: Stream has already been listened to) terjadi karena secara default, Stream di Dart bersifat Single-Subscription. Artinya, stream tersebut hanya boleh memiliki satu pendengar (listener) pada satu waktu. Pada langkah 2, kita mencoba melakukan .listen() kembali pada variabel stream yang sama yang sudah didengarkan oleh subscription pertama. Karena stream tersebut belum diubah menjadi broadcast stream, maka Dart menolak permintaan subscription kedua dan melemparkan error.
+
+Soal 11: Jelaskan mengapa hal itu bisa terjadi?
+
+Jawaban: Hal itu terjadi karena kita telah mengubah stream menjadi Broadcast Stream menggunakan method .asBroadcastStream().
+
+Broadcast Stream memungkinkan banyak listener (subscriber) untuk mendengarkan stream yang sama secara bersamaan.
+
+Ketika tombol ditekan dan sebuah angka dimasukkan ke sink, stream akan "menyiarkan" angka tersebut ke semua subscriber yang aktif.
+
+Akibatnya:
+
+Subscription 1 menerima data, lalu mengubahnya lewat transformer (dikali 10), dan memperbarui tampilan angka besar (lastNumber).
+
+Subscription 2 menerima data (data mentah tanpa transformer karena kita listen langsung ke stream), lalu menambahkannya ke variabel string values (misal: 4 - ).
+
+
