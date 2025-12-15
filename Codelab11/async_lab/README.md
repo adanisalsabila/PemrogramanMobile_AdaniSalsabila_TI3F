@@ -12,7 +12,7 @@
 
 ![hasil](img/praktikum2b.png)      
 
-Jawaban Soal
+Jawaban Soal 4
 Pertanyaan: Jelaskan maksud kode langkah 1 dan 2 tersebut!
 
 Jawaban:
@@ -32,6 +32,23 @@ Karena dijalankan secara berurutan (tunggu satu selesai, baru lanjut ke berikutn
 # PRAKTIKUM 3 : Menggunakan Completer di Future    
 
 ![hasil](img/kodepraktikum3.png)      
+
+![hasil](img/praktikum3.png)      
+
+![hasil](img/praktikum3b.png)      
+
+Jawaban Soal 5
+Pertanyaan: Jelaskan maksud kode langkah 2 tersebut!
+
+Jawaban: Kode pada langkah 2 bertujuan untuk membuat mekanisme Future secara manual menggunakan Completer.
+
+completer = Completer<int>();: Kita membuat object Completer baru yang nantinya akan menghasilkan nilai bertipe int.
+
+return completer.future;: Pada method getNumber, kita tidak menunggu proses selesai. Kita langsung mengembalikan object Future dari completer tersebut. Ini seperti memberikan "janji" (tiket) kepada pemanggil bahwa nanti akan ada data.
+
+calculate() & completer.complete(42): Method calculate berjalan secara asynchronous (menunggu 5 detik). Setelah waktu habis, kita memanggil completer.complete(42). Perintah ini memberitahu Completer bahwa tugas sudah selesai dan "janji" tadi dipenuhi dengan nilai 42. Saat baris ini dieksekusi, bagian .then() di tombol akan berjalan.
+
+Tugas: Capture hasil (GIF) saat loading 5 detik lalu muncul angka 42. Commit dengan pesan "W11: Soal 5".
 
 # PRAKTIKUM 4: Memanggil Future secara paralel
 

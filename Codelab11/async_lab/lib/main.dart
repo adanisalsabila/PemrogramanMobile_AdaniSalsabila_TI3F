@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async'; // Diperlukan untuk Completer
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -105,6 +106,20 @@ class _AsyncScreenState extends State<AsyncScreen> {
     });
   }
 
+  late Completer completer;
+
+  Future getNumber() {
+    completer = Completer<int>(); // Inisialisasi Completer
+    calculate(); // Memulai proses perhitungan
+    return completer.future; // Mengembalikan Future segera, isinya menyusul
+  }
+
+  Future calculate() async {
+    // Simulasi proses yang memakan waktu 5 detik
+    await Future.delayed(const Duration(seconds: 5));
+    completer.complete(42); // Menyelesaikan Future dengan angka 42
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,15 +130,16 @@ class _AsyncScreenState extends State<AsyncScreen> {
           children: [
             Text(result, style: const TextStyle(fontSize: 20), textAlign: TextAlign.center),
             const SizedBox(height: 20),
-            ElevatedButton(
+ElevatedButton(
   onPressed: () {
-    fetchData();
-    count();
+    getNumber().then((value) {
+      setState(() {
+        result = value.toString();
+      });
+    });
   },
-  child: const Text('Praktikum 2: Hitung Angka'),
+  child: const Text('Praktikum 3: Completer'),
 ),
-//   child: const Text('Praktikum 1: Unduh Data'),
-// ),
           ],
         ),
       ),
