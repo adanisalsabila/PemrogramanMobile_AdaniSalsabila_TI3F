@@ -86,6 +86,10 @@ Langkah 4 (Future.wait): Menggunakan Future.wait yang merupakan bawaan dari Dart
 
 ![hasil](img/praktikum5.png)      
 
+![hasil](img/kodepraktikum5b.png)      
+
+![hasil](img/praktikum5b.png)      
+
 Pertanyaan: Jelaskan perbedaan kode langkah 1 dan 4!
 
 Jawaban:
@@ -109,6 +113,12 @@ Blok finally akan selalu dieksekusi di akhir.
 Pola ini umumnya lebih disukai (cleaner) di Flutter karena alur kodenya lebih mudah dipahami dan dibaca dari atas ke bawah.
 
 # PRAKTIKUM 6 : Menggunakan Future dengan StatefulWidget    
+
+![hasil](img/praktikum6.png)      
+
+Pertanyaan: Apakah Anda mendapatkan koordinat GPS ketika run di browser? Mengapa demikian?
+
+Jawaban: Ya, koordinat GPS tetap bisa didapatkan di browser (Flutter Web). Mengapa? Karena package geolocator mendukung platform Web. Di belakang layar, ia menggunakan HTML5 Geolocation API standar yang ada di browser modern.
 
 
 
