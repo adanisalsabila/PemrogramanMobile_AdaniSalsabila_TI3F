@@ -72,19 +72,42 @@ class _MyHomePageState extends State<MyHomePage> {
                 subtitle: Text(
                   '${pizza.description} - € ${pizza.price}',
                 ),
+                // UPDATE: Tambahkan onTap untuk Edit (isNew: false)
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PizzaDetailScreen(
+                        pizza: pizza, // Kirim data yang diklik
+                        isNew: false, // Mode Edit (PUT)
+                      ),
+                    ),
+                  );
+                },
               );
             },
           );
         },
       ),
-      // PERBAIKAN: floatingActionButton diletakkan DI SINI (di dalam Scaffold)
+      // UPDATE: FloatingActionButton untuk Tambah Baru (isNew: true)
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => const PizzaDetailScreen()),
+              builder: (context) => PizzaDetailScreen(
+                // Kirim Pizza kosong/default
+                pizza: Pizza(
+                    id: 0,
+                    pizzaName: '',
+                    description: '',
+                    price: 0,
+                    imageUrl: '',
+                    myCrust: ''), // Field baru dari Soal 2
+                isNew: true, // Mode Baru (POST)
+              ),
+            ),
           );
         },
       ),

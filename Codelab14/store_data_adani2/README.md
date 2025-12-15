@@ -16,3 +16,12 @@
 
 ![hasil](img/praktikum2d.png)      
 
+# PRAKTIKUM 3 : Memperbarui Data di Web Service (PUT)    
+
+![hasil](img/praktikum3.png)      
+
+![hasil](img/praktikum3b.png)      
+
+![hasil](img/praktikum3c.png)      
+
+![hasil](img/praktikum3d.png)      
