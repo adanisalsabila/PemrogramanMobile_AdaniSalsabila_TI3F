@@ -52,3 +52,30 @@ Dalam Praktikum ini: Digunakan untuk memanggil scrollController.dispose(). Ini s
 
 # PRAKTIKUM 2: Mengelola Data Layer dengan InheritedWidget dan InheritedNotifier    
 
+![hasil](img/praktikum2.png)     
+
+1. Jelaskan mana yang dimaksud InheritedWidget pada langkah 1 tersebut! Mengapa yang digunakan InheritedNotifier?
+
+Yang dimaksud InheritedWidget: Pada langkah 1, kelas PlanProvider adalah turunan dari InheritedNotifier. InheritedNotifier sendiri adalah subclass khusus dari InheritedWidget. Jadi, PlanProvider secara teknis berperan sebagai InheritedWidget yang menyimpan data.
+
+Mengapa InheritedNotifier? Kita menggunakan InheritedNotifier (bukan InheritedWidget biasa) karena kita ingin widget-widget di bawahnya secara otomatis dibangun ulang (rebuild) setiap kali ada perubahan pada data (ValueNotifier).
+
+Jika pakai InheritedWidget biasa: Kita harus memanggil setState manual di widget anak untuk memperbarui UI.
+
+Pakai InheritedNotifier: Ia bekerja sama dengan ValueNotifier. Jika nilai di ValueNotifier berubah, InheritedNotifier otomatis memberitahu widget turunannya (seperti ValueListenableBuilder) untuk melakukan rebuild. Ini lebih efisien dan bersih.
+
+2. Jelaskan maksud dari method di langkah 3 pada praktikum tersebut! Mengapa dilakukan demikian?
+
+Maksud Method: Langkah 3 menambahkan dua getter:
+
+completedCount: Menghitung jumlah tugas yang status complete-nya true.
+
+completenessMessage: Mengembalikan string berisi status pengerjaan (contoh: "3 out of 5 tasks").
+
+Mengapa dilakukan demikian? Ini adalah penerapan prinsip Separation of Concerns (Pemisahan Tanggung Jawab). Logika perhitungan data ("Business Logic") seharusnya berada di Model (plan.dart), bukan di View (plan_screen.dart). Dengan cara ini:
+
+Kode View menjadi lebih bersih (hanya fokus menampilkan UI).
+
+Logika perhitungan bisa digunakan ulang di layar lain jika diperlukan.
+
+Lebih mudah ditest (Unit Testing) karena logikanya terisolasi di Model.
