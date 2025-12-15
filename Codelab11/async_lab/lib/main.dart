@@ -114,10 +114,21 @@ class _AsyncScreenState extends State<AsyncScreen> {
     return completer.future; // Mengembalikan Future segera, isinya menyusul
   }
 
+  // Future calculate() async {
+  //   // Simulasi proses yang memakan waktu 5 detik
+  //   await Future.delayed(const Duration(seconds: 5));
+  //   completer.complete(42); // Menyelesaikan Future dengan angka 42
+  // }
+
   Future calculate() async {
-    // Simulasi proses yang memakan waktu 5 detik
-    await Future.delayed(const Duration(seconds: 5));
-    completer.complete(42); // Menyelesaikan Future dengan angka 42
+    try {
+      await Future.delayed(const Duration(seconds: 5));
+      // Kita memaksakan terjadinya error untuk simulasi
+      throw Exception('Something bad happened'); 
+    } catch (_) {
+      // Jika terjadi error, kita selesaikan completer dengan error
+      completer.completeError({}); 
+    }
   }
 
   @override
@@ -130,16 +141,30 @@ class _AsyncScreenState extends State<AsyncScreen> {
           children: [
             Text(result, style: const TextStyle(fontSize: 20), textAlign: TextAlign.center),
             const SizedBox(height: 20),
-ElevatedButton(
+            ElevatedButton(
   onPressed: () {
     getNumber().then((value) {
       setState(() {
         result = value.toString();
       });
+    }).catchError((e) {
+      setState(() {
+        result = 'An error occurred';
+      });
     });
   },
-  child: const Text('Praktikum 3: Completer'),
+  child: const Text('Praktikum 3: Completer Error'),
 ),
+// ElevatedButton(
+//   onPressed: () {
+//     getNumber().then((value) {
+//       setState(() {
+//         result = value.toString();
+//       });
+//     });
+//   },
+//   child: const Text('Praktikum 3: Completer'),
+// ),
           ],
         ),
       ),

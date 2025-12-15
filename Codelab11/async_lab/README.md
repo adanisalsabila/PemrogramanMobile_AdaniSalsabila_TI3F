@@ -48,7 +48,22 @@ return completer.future;: Pada method getNumber, kita tidak menunggu proses sele
 
 calculate() & completer.complete(42): Method calculate berjalan secara asynchronous (menunggu 5 detik). Setelah waktu habis, kita memanggil completer.complete(42). Perintah ini memberitahu Completer bahwa tugas sudah selesai dan "janji" tadi dipenuhi dengan nilai 42. Saat baris ini dieksekusi, bagian .then() di tombol akan berjalan.
 
-Tugas: Capture hasil (GIF) saat loading 5 detik lalu muncul angka 42. Commit dengan pesan "W11: Soal 5".
+![hasil](img/kodepraktikum3fix.png)      
+
+![hasil](img/praktikum3c.png)      
+
+Jawaban Soal 6
+Pertanyaan: Jelaskan maksud perbedaan kode langkah 2 dengan langkah 5-6 tersebut!
+
+Jawaban:
+
+Langkah 2 (Sukses): Kode ini berasumsi proses selalu berhasil. Method calculate() menggunakan completer.complete(42) untuk mengirimkan data sukses. Di bagian pemanggil (Langkah 3), kita hanya menggunakan .then() untuk menangkap data sukses tersebut.
+
+Langkah 5-6 (Error Handling):
+
+Pada Langkah 5, kita mensimulasikan kegagalan proses (menggunakan try-catch dan throw Exception). Alih-alih complete(), kita menggunakan completer.completeError({}). Ini memberitahu Future bahwa tugas gagal.
+
+Pada Langkah 6, kita menambahkan blok .catchError(...) setelah .then(). Ini berfungsi untuk "menangkap" jika completer mengirimkan status error. Jika kita tidak menambahkan catchError, aplikasi bisa crash (Uncaught Exception) saat completer.completeError dipanggil.
 
 # PRAKTIKUM 4: Memanggil Future secara paralel
 
