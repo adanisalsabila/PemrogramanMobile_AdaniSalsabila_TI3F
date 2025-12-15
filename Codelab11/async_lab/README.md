@@ -120,6 +120,21 @@ Pertanyaan: Apakah Anda mendapatkan koordinat GPS ketika run di browser? Mengapa
 
 Jawaban: Ya, koordinat GPS tetap bisa didapatkan di browser (Flutter Web). Mengapa? Karena package geolocator mendukung platform Web. Di belakang layar, ia menggunakan HTML5 Geolocation API standar yang ada di browser modern.
 
+# PRAKTIKUM 7 : Manajemen Future dengan FutureBuilder
+
+![hasil](img/praktikum7.png)      
+
+Pertanyaan: Apakah ada perbedaan UI dengan praktikum sebelumnya? Mengapa demikian?
+
+Jawaban untuk Laporan:
+
+Secara Visual (UI): Tidak ada perbedaan. Tampilannya sama persis: muncul loading spinner selama 3 detik, lalu muncul teks koordinat lokasi.
+
+Secara Teknis (Logic): Ada perbedaan besar.
+
+Pada praktikum sebelumnya (Praktikum 6), kita memaksa UI berubah secara manual menggunakan setState().
+
+Pada praktikum ini (Praktikum 7), kita tidak lagi memanggil setState(). Widget FutureBuilder secara otomatis mendengarkan status dari future (waiting, done). Ketika status berubah (misal dari loading ke selesai), FutureBuilder otomatis membangun ulang (rebuild) widget di dalamnya. Ini membuat kode lebih bersih (clean code) dan reaktif.
 
 
 
