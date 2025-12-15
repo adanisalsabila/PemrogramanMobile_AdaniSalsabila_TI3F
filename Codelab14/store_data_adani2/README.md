@@ -6,3 +6,13 @@
 
 ![hasil](img/praktikum1b.png)       
 
+# PRAKTIKUM 2 : Mengirim Data ke Web Service (POST)    
+
+![hasil](img/praktikum2.png)      
+
+![hasil](img/praktikum2b.png)      
+
+![hasil](img/praktikum2c.png)      
+
+![hasil](img/praktikum2d.png)      
+

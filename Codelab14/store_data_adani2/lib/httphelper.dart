@@ -5,11 +5,24 @@ import 'pizza.dart';
 
 class HttpHelper {
   // GANTI DENGAN DOMAIN WIREMOCK ANDA SENDIRI (Tanpa https://)
-  // Contoh: 'x8ki4.wiremockapi.cloud'
-  final String authority = 'r1v9l.wiremockapi.cloud'; 
-  
+  final String authority = 'r1v9l.wiremockapi.cloud';
   final String path = 'pizzalist';
 
+  Future<String> postPizza(Pizza pizza) async {
+    const postPath = '/pizza';
+    String post = json.encode(pizza.toJson());
+    
+    Uri url = Uri.https(authority, postPath);
+
+    http.Response r = await http.post(
+      url,
+      body: post,
+    );
+
+    return r.body;
+  }
+
+  // Perbaikan: Method ini harus ada DI DALAM kurung kurawal class HttpHelper
   Future<List<Pizza>> getPizzaList() async {
     final Uri url = Uri.https(authority, path);
     final http.Response result = await http.get(url);
@@ -24,4 +37,4 @@ class HttpHelper {
       return [];
     }
   }
-}
+} // <--- Kurung kurawal penutup class dipindah ke SINI (paling akhir)

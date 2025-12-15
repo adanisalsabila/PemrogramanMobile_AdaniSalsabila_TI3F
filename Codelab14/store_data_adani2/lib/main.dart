@@ -1,7 +1,7 @@
-// File: lib/main.dart
 import 'package:flutter/material.dart';
 import 'httphelper.dart';
 import 'pizza.dart';
+import 'pizza_detail.dart'; // Pastikan import ini ada
 
 void main() {
   runApp(const MyApp());
@@ -14,10 +14,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       // SOAL 1: Identitas Nama
-      title: 'Flutter JSON Adani', 
+      title: 'Flutter JSON Adani',
       theme: ThemeData(
         // SOAL 1: Warna Tema Favorit (Misal: Indigo)
-        primarySwatch: Colors.indigo, 
+        primarySwatch: Colors.indigo,
         useMaterial3: true,
       ),
       home: const MyHomePage(),
@@ -74,6 +74,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               );
             },
+          );
+        },
+      ),
+      // PERBAIKAN: floatingActionButton diletakkan DI SINI (di dalam Scaffold)
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const PizzaDetailScreen()),
           );
         },
       ),
