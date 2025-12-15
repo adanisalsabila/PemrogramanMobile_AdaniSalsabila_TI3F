@@ -36,6 +36,11 @@ Tanpa konstanta, kita harus mencari dan mengganti teks 'pizzaName' di seluruh fi
 ![hasil](img/praktikum4.png)      
 
 
+# PRAKTIKUM 5 : Akses filesystem dengan path_provider
+
+![hasil](img/praktikum5.png)      
+
+
 
 
 
