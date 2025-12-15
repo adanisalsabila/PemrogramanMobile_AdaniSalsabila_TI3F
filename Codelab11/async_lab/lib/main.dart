@@ -220,8 +220,30 @@
 //   }
 // }
 
+// import 'package:flutter/material.dart';
+// import 'navigation_first.dart'; // Import file baru
+
+// void main() {
+//   runApp(const MyApp());
+// }
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Flutter Demo',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: const NavigationFirst(), // Ganti home ke sini
+//     );
+//   }
+// }
+
 import 'package:flutter/material.dart';
-import 'navigation_first.dart'; // Import file baru
+import 'navigation_dialog.dart'; // Import file baru
 
 void main() {
   runApp(const MyApp());
@@ -237,7 +259,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const NavigationFirst(), // Ganti home ke sini
+      home: const NavigationDialogScreen(), // Ganti home ke sini
     );
   }
 }

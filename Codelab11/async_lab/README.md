@@ -136,7 +136,7 @@ Pada praktikum sebelumnya (Praktikum 6), kita memaksa UI berubah secara manual m
 
 Pada praktikum ini (Praktikum 7), kita tidak lagi memanggil setState(). Widget FutureBuilder secara otomatis mendengarkan status dari future (waiting, done). Ketika status berubah (misal dari loading ke selesai), FutureBuilder otomatis membangun ulang (rebuild) widget di dalamnya. Ini membuat kode lebih bersih (clean code) dan reaktif.
 
-# PRAKTIKUM 8: Navigation route dengan Future Function     
+# PRAKTIKUM 8 : Navigation route dengan Future Function     
 
 ![hasil](img/praktikum8.png)      
 
@@ -172,4 +172,36 @@ Colors.green (Hijau)
 
 Colors.purple (Ungu)
 
+# PRAKTIKUM 9 : Memanfaatkan async/await dengan Widget Dialog     
 
+![hasil](img/praktikum9.png)      
+
+![hasil](img/praktikum9b.png)      
+
+![hasil](img/praktikum9c.png)     
+
+Pertanyaan: Cobalah klik setiap button, apa yang terjadi? Mengapa demikian? Gantilah 3 warna pada langkah 3 dengan warna favorit Anda!
+
+Jawaban:
+
+Apa yang terjadi: Ketika tombol di dalam dialog diklik, dialog akan tertutup dan warna latar belakang layar utama akan berubah sesuai dengan tombol warna yang dipilih.
+
+Mengapa demikian:
+
+Fungsi showDialog di Flutter adalah fungsi asynchronous yang mengembalikan sebuah Future.
+
+Kita menggunakan kata kunci await di depan showDialog. Ini memberitahu program untuk "menunggu" di baris tersebut sampai dialog ditutup.
+
+Ketika tombol di dalam dialog ditekan, kita memanggil Navigator.pop(context, warna). Fungsi ini menutup dialog dan mengirimkan data warna kembali ke pemanggilnya (showDialog).
+
+Setelah dialog tertutup, nilai Future terpenuhi, variabel selectedColor menerima data warna tersebut.
+
+Terakhir, setState dijalankan untuk memperbarui UI dengan warna baru.
+
+Warna Favorit yang Diganti: Saya telah mengganti warna di kode langkah 3 menjadi:
+
+Colors.deepPurple (Ungu Tua)
+
+Colors.teal (Hijau Kebiruan)
+
+Colors.amber (Kuning Amber)
