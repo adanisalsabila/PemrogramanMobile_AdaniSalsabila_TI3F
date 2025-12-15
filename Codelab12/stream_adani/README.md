@@ -72,6 +72,23 @@ Langkah 2: Kita menginisialisasi transformer dengan logika pemrosesan data. Meng
 Langkah 3: Kita menerapkan transformer tersebut ke stream utama menggunakan perintah .transform(transformer). Ini seperti menyambungkan pipa filter. Alur datanya menjadi: StreamController (Input) -> Transformer (Dikali 10) -> Listen (Update UI). Hasilnya, data yang diterima oleh listen dan ditampilkan di layar adalah data yang sudah dimodifikasi (0-90), bukan data mentah (0-9).
 
  
- # PRAKTIKUM 4 : Subscribe ke stream events      
+# PRAKTIKUM 4 : Subscribe ke stream events      
 
- 
+![hasil](img/praktikum4.png)      
+
+Soal 9: Jelaskan maksud kode langkah 2, 6, dan 8 tersebut!
+
+Jawaban:
+
+Langkah 2 (initState & Listen): Pada langkah ini, kita melakukan inisialisasi stream dan transformer, lalu melakukan subscription (berlangganan) ke stream tersebut. Hasil langganan ini disimpan dalam variabel subscription. Bedanya dengan praktikum sebelumnya, di sini kita mendefinisikan handler yang lengkap:
+
+Handler utama (untuk data sukses).
+
+onError (untuk menangani jika ada error).
+
+onDone (untuk menangani ketika stream ditutup/selesai). Ini memungkinkan kita untuk merespons semua status stream dengan baik.
+
+Langkah 6 (dispose): Method dispose() dipanggil oleh Flutter ketika widget ini dihapus dari widget tree (misalnya pindah layar atau aplikasi ditutup). Di sini kita memanggil subscription.cancel(). Ini adalah praktik terbaik (best practice) untuk mencegah Memory Leak. Jika kita tidak membatalkan subscription, stream akan terus mendengarkan di latar belakang meskipun UI-nya sudah tidak ada, yang bisa membebani kinerja aplikasi.
+
+Langkah 8 (addRandomNumber): Method ini bertugas membuat angka acak (0-9) dan memasukkannya ke dalam stream menggunakan addNumberToSink. Ini adalah sisi Producer dari stream. Data yang dimasukkan di sini akan diproses oleh transformer (dikali 10) dan kemudian diterima oleh listener di langkah 2 untuk memperbarui UI. (Catatan tambahan: Sebaiknya kita juga mengecek apakah controller sudah ditutup atau belum sebelum menambah data agar tidak terjadi error unhandled exception).
+
