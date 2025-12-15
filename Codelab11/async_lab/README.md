@@ -84,6 +84,32 @@ Langkah 4 (Future.wait): Menggunakan Future.wait yang merupakan bawaan dari Dart
 
 ![hasil](img/kodepraktikum5.png)      
 
-# PRAKTIKUM 6 : Menggunakan Future dengan StatefulWidget
+![hasil](img/praktikum5.png)      
+
+Pertanyaan: Jelaskan perbedaan kode langkah 1 dan 4!
+
+Jawaban:
+
+Langkah 1 (Pola then/catchError): Menggunakan pendekatan callback-based. Kita merangkai fungsi-fungsi yang akan dijalankan setelah Future selesai.
+
+.then() menangani kondisi sukses.
+
+.catchError() menangani kondisi error (mirip blok catch).
+
+.whenComplete() dijalankan apapun yang terjadi (mirip blok finally). Kode ini lebih bersifat fungsional, tetapi bisa menjadi sulit dibaca jika rantainya terlalu panjang (callback hell).
+
+Langkah 4 (Pola async/await dengan try-catch): Menggunakan pendekatan imperative yang terlihat seperti kode synchronous biasa.
+
+Kita "menunggu" (await) proses returnError() selesai.
+
+Jika terjadi error selama await, eksekusi langsung lompat ke blok catch.
+
+Blok finally akan selalu dieksekusi di akhir.
+
+Pola ini umumnya lebih disukai (cleaner) di Flutter karena alur kodenya lebih mudah dipahami dan dibaca dari atas ke bawah.
+
+# PRAKTIKUM 6 : Menggunakan Future dengan StatefulWidget    
+
+
 
 

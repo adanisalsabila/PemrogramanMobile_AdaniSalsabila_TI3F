@@ -153,48 +153,40 @@ class _AsyncScreenState extends State<AsyncScreen> {
     });
   }
 
-  @override
+  Future returnError() async {
+    await Future.delayed(const Duration(seconds: 2));
+    throw Exception('Something terrible happened!');
+  }
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Asynchronous Programming')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(result, style: const TextStyle(fontSize: 20), textAlign: TextAlign.center),
+          children: [ // <--- Awal List
+            Text(result,
+                style: const TextStyle(fontSize: 20),
+                textAlign: TextAlign.center),
             const SizedBox(height: 20),
-
             ElevatedButton(
-  onPressed: () {
-    returnFG();
-  },
-  child: const Text('Praktikum 4: FutureGroup'),
-),
-//             ElevatedButton(
-//   onPressed: () {
-//     getNumber().then((value) {
-//       setState(() {
-//         result = value.toString();
-//       });
-//     }).catchError((e) {
-//       setState(() {
-//         result = 'An error occurred';
-//       });
-//     });
-//   },
-//   child: const Text('Praktikum 3: Completer Error'),
-// ),
-// ElevatedButton(
-//   onPressed: () {
-//     getNumber().then((value) {
-//       setState(() {
-//         result = value.toString();
-//       });
-//     });
-//   },
-//   child: const Text('Praktikum 3: Completer'),
-// ),
-          ],
+              onPressed: () {
+                returnError()
+                    .then((value) {
+                      setState(() {
+                        result = 'Success';
+                      });
+                    })
+                    .catchError((onError) {
+                      setState(() {
+                        result = onError.toString();
+                      });
+                    })
+                    .whenComplete(() => print('Complete'));
+              },
+              child: const Text('Praktikum 5: Error Handling'),
+            ),
+          ], // <--- BAGIAN INI YANG HILANG/SALAH (Tutup Siku)
         ),
       ),
     );
