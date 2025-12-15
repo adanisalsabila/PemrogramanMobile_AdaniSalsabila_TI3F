@@ -31,4 +31,11 @@ Jika backend mengganti nama key JSON, misalnya dari "pizzaName" menjadi "name", 
 Tanpa konstanta, kita harus mencari dan mengganti teks 'pizzaName' di seluruh file satu per satu, yang berisiko ada yang terlewat.
 
 
+# PRAKTIKUM 4 : SharedPreferences     
+
+![hasil](img/praktikum4.png)      
+
+
+
+
 
