@@ -50,7 +50,7 @@ Kegunaan: Method ini dipanggil ketika widget tersebut dihapus secara permanen da
 
 Dalam Praktikum ini: Digunakan untuk memanggil scrollController.dispose(). Ini sangat penting untuk mencegah Memory Leak (kebocoran memori). Karena ScrollController memegang referensi ke sumber daya sistem, kita wajib membersihkannya secara manual saat tidak lagi digunakan agar performa aplikasi tetap terjaga.
 
-# PRAKTIKUM 2: Mengelola Data Layer dengan InheritedWidget dan InheritedNotifier    
+# PRAKTIKUM 2 : Mengelola Data Layer dengan InheritedWidget dan InheritedNotifier    
 
 ![hasil](img/praktikum2.png)     
 
@@ -79,3 +79,37 @@ Kode View menjadi lebih bersih (hanya fokus menampilkan UI).
 Logika perhitungan bisa digunakan ulang di layar lain jika diperlukan.
 
 Lebih mudah ditest (Unit Testing) karena logikanya terisolasi di Model.
+
+# PRAKTIKUM 3 : State di Multiple Screens    
+
+![hasil](img/praktikum3.png)     
+
+![hasil](img/praktikum3b.png)     
+
+1. Jelaskan maksud dari gambar diagram (Widget Tree) tersebut!
+
+Diagram: (Diasumsikan diagram menunjukkan PlanProvider di puncak, dengan MaterialApp, PlanCreatorScreen, dan PlanScreen di bawahnya).
+
+Penjelasan: Diagram tersebut menggambarkan konsep "Lift State Up".
+
+PlanProvider diletakkan di posisi teratas (root) dari widget tree (di atas MaterialApp). Ini membuatnya menjadi induk dari semua screen.
+
+Karena posisinya di atas, State (data List<Plan>) yang disimpannya dapat diakses oleh widget turunannya manapun, yaitu PlanCreatorScreen (untuk menambah/melihat daftar plan) dan PlanScreen (untuk melihat detail tugas).
+
+Ketika data di PlanProvider berubah, kedua layar tersebut bisa mendapatkan update terbaru tanpa perlu mengoper data secara manual berulang-ulang melalui konstruktor yang panjang (prop drilling).
+
+2. Apa yang telah Anda buat (Penjelasan GIF Langkah 14)?
+
+Deskripsi Hasil: Saya telah membuat aplikasi Master Plan yang mendukung Multiple Screens.
+
+Awalnya, aplikasi menampilkan PlanCreatorScreen yang kosong.
+
+Saya bisa mengetik nama rencana (misal: "Belajar Flutter", "Belanja Mingguan") lalu menekan enter untuk membuat list rencana baru.
+
+Daftar rencana muncul dalam ListView.
+
+Ketika salah satu rencana diklik, aplikasi berpindah (navigasi) ke PlanScreen untuk rencana tersebut.
+
+Di dalam PlanScreen, saya bisa menambah tugas (Tasks) dan mencentangnya.
+
+Ketika kembali ke layar awal, status kelengkapan tugas (misal: "2 out of 5 tasks") terupdate secara otomatis di daftar rencana.

@@ -107,20 +107,137 @@
 //   }
 // }
 
+// import 'package:flutter/material.dart';
+// import '../models/data_layer.dart';
+// import '../provider/plan_provider.dart'; // Import Provider
+
+// class PlanScreen extends StatefulWidget {
+//   const PlanScreen({super.key});
+
+//   @override
+//   State createState() => _PlanScreenState();
+// }
+
+// class _PlanScreenState extends State<PlanScreen> {
+//   // HAPUS variabel 'Plan plan = const Plan();' karena sekarang data ada di Provider
+//   late ScrollController scrollController;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     scrollController = ScrollController()
+//       ..addListener(() {
+//         FocusScope.of(context).requestFocus(FocusNode());
+//       });
+//   }
+
+//   @override
+//   void dispose() {
+//     scrollController.dispose();
+//     super.dispose();
+//   }
+
+//   // Langkah 9: Update method build dengan SafeArea dan Column
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: const Text('Master Plan Adani')),
+//       body: ValueListenableBuilder<Plan>(
+//         valueListenable: PlanProvider.of(context),
+//         builder: (context, plan, child) {
+//           return Column(
+//             children: [
+//               Expanded(child: _buildList(plan)), // List tugas
+//               SafeArea(child: Text(plan.completenessMessage)), // Footer progress
+//             ],
+//           );
+//         },
+//       ),
+//       floatingActionButton: _buildAddTaskButton(context),
+//     );
+//   }
+
+//   // Langkah 5: Tombol Tambah menggunakan Provider
+//   Widget _buildAddTaskButton(BuildContext context) {
+//     ValueNotifier<Plan> planNotifier = PlanProvider.of(context);
+//     return FloatingActionButton(
+//       child: const Icon(Icons.add),
+//       onPressed: () {
+//         Plan currentPlan = planNotifier.value;
+//         planNotifier.value = Plan(
+//           name: currentPlan.name,
+//           tasks: List<Task>.from(currentPlan.tasks)..add(const Task()),
+//         );
+//       },
+//     );
+//   }
+
+//   // Langkah 7: Menerima parameter Plan dari ValueListenableBuilder
+//   Widget _buildList(Plan plan) {
+//     return ListView.builder(
+//       controller: scrollController,
+//       keyboardDismissBehavior: Theme.of(context).platform == TargetPlatform.iOS
+//           ? ScrollViewKeyboardDismissBehavior.onDrag
+//           : ScrollViewKeyboardDismissBehavior.manual,
+//       itemCount: plan.tasks.length,
+//       itemBuilder: (context, index) =>
+//           _buildTaskTile(plan.tasks[index], index, context),
+//     );
+//   }
+
+//   // Langkah 6: Task Tile menggunakan Provider
+//   Widget _buildTaskTile(Task task, int index, BuildContext context) {
+//     ValueNotifier<Plan> planNotifier = PlanProvider.of(context);
+//     return ListTile(
+//       leading: Checkbox(
+//           value: task.complete,
+//           onChanged: (selected) {
+//             Plan currentPlan = planNotifier.value;
+//             planNotifier.value = Plan(
+//               name: currentPlan.name,
+//               tasks: List<Task>.from(currentPlan.tasks)
+//                 ..[index] = Task(
+//                   description: task.description,
+//                   complete: selected ?? false,
+//                 ),
+//             );
+//           }),
+//       title: TextFormField(
+//         initialValue: task.description,
+//         onChanged: (text) {
+//           Plan currentPlan = planNotifier.value;
+//           planNotifier.value = Plan(
+//             name: currentPlan.name,
+//             tasks: List<Task>.from(currentPlan.tasks)
+//               ..[index] = Task(
+//                 description: text,
+//                 complete: task.complete,
+//               ),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+
 import 'package:flutter/material.dart';
 import '../models/data_layer.dart';
-import '../provider/plan_provider.dart'; // Import Provider
+import '../provider/plan_provider.dart';
 
 class PlanScreen extends StatefulWidget {
-  const PlanScreen({super.key});
+  // Langkah 3: Menambahkan atribut plan
+  final Plan plan;
+  const PlanScreen({super.key, required this.plan});
 
   @override
   State createState() => _PlanScreenState();
 }
 
 class _PlanScreenState extends State<PlanScreen> {
-  // HAPUS variabel 'Plan plan = const Plan();' karena sekarang data ada di Provider
   late ScrollController scrollController;
+  
+  // Langkah 5: Getter untuk mengambil plan dari widget
+  Plan get plan => widget.plan;
 
   @override
   void initState() {
@@ -137,18 +254,22 @@ class _PlanScreenState extends State<PlanScreen> {
     super.dispose();
   }
 
-  // Langkah 9: Update method build dengan SafeArea dan Column
+  // Langkah 7: Method build
   @override
   Widget build(BuildContext context) {
+    ValueNotifier<List<Plan>> plansNotifier = PlanProvider.of(context);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Master Plan Adani')),
-      body: ValueListenableBuilder<Plan>(
-        valueListenable: PlanProvider.of(context),
-        builder: (context, plan, child) {
+      appBar: AppBar(title: Text(plan.name)),
+      body: ValueListenableBuilder<List<Plan>>(
+        valueListenable: plansNotifier,
+        builder: (context, plans, child) {
+          // Mengambil plan terbaru dari list berdasarkan nama
+          Plan currentPlan = plans.firstWhere((p) => p.name == plan.name);
           return Column(
             children: [
-              Expanded(child: _buildList(plan)), // List tugas
-              SafeArea(child: Text(plan.completenessMessage)), // Footer progress
+              Expanded(child: _buildList(currentPlan)),
+              SafeArea(child: Text(currentPlan.completenessMessage)),
             ],
           );
         },
@@ -157,63 +278,72 @@ class _PlanScreenState extends State<PlanScreen> {
     );
   }
 
-  // Langkah 5: Tombol Tambah menggunakan Provider
   Widget _buildAddTaskButton(BuildContext context) {
-    ValueNotifier<Plan> planNotifier = PlanProvider.of(context);
+    ValueNotifier<List<Plan>> planNotifier = PlanProvider.of(context);
     return FloatingActionButton(
       child: const Icon(Icons.add),
       onPressed: () {
-        Plan currentPlan = planNotifier.value;
-        planNotifier.value = Plan(
-          name: currentPlan.name,
-          tasks: List<Task>.from(currentPlan.tasks)..add(const Task()),
-        );
+        Plan currentPlan = plan;
+        int planIndex =
+            planNotifier.value.indexWhere((p) => p.name == currentPlan.name);
+        List<Task> updatedTasks = List<Task>.from(currentPlan.tasks)
+          ..add(const Task());
+        
+        // Update list global
+        planNotifier.value = List<Plan>.from(planNotifier.value)
+          ..[planIndex] = Plan(
+            name: currentPlan.name,
+            tasks: updatedTasks,
+          );
       },
     );
   }
 
-  // Langkah 7: Menerima parameter Plan dari ValueListenableBuilder
   Widget _buildList(Plan plan) {
     return ListView.builder(
       controller: scrollController,
-      keyboardDismissBehavior: Theme.of(context).platform == TargetPlatform.iOS
-          ? ScrollViewKeyboardDismissBehavior.onDrag
-          : ScrollViewKeyboardDismissBehavior.manual,
       itemCount: plan.tasks.length,
       itemBuilder: (context, index) =>
           _buildTaskTile(plan.tasks[index], index, context),
     );
   }
 
-  // Langkah 6: Task Tile menggunakan Provider
+  // Langkah 8: Edit _buildTaskTile
   Widget _buildTaskTile(Task task, int index, BuildContext context) {
-    ValueNotifier<Plan> planNotifier = PlanProvider.of(context);
+    ValueNotifier<List<Plan>> planNotifier = PlanProvider.of(context);
+
     return ListTile(
       leading: Checkbox(
           value: task.complete,
           onChanged: (selected) {
-            Plan currentPlan = planNotifier.value;
-            planNotifier.value = Plan(
-              name: currentPlan.name,
-              tasks: List<Task>.from(currentPlan.tasks)
-                ..[index] = Task(
-                  description: task.description,
-                  complete: selected ?? false,
-                ),
-            );
+            Plan currentPlan = plan;
+            int planIndex = planNotifier.value
+                .indexWhere((p) => p.name == currentPlan.name);
+            planNotifier.value = List<Plan>.from(planNotifier.value)
+              ..[planIndex] = Plan(
+                name: currentPlan.name,
+                tasks: List<Task>.from(currentPlan.tasks)
+                  ..[index] = Task(
+                    description: task.description,
+                    complete: selected ?? false,
+                  ),
+              );
           }),
       title: TextFormField(
         initialValue: task.description,
         onChanged: (text) {
-          Plan currentPlan = planNotifier.value;
-          planNotifier.value = Plan(
-            name: currentPlan.name,
-            tasks: List<Task>.from(currentPlan.tasks)
-              ..[index] = Task(
-                description: text,
-                complete: task.complete,
-              ),
-          );
+          Plan currentPlan = plan;
+          int planIndex = planNotifier.value
+              .indexWhere((p) => p.name == currentPlan.name);
+          planNotifier.value = List<Plan>.from(planNotifier.value)
+            ..[planIndex] = Plan(
+              name: currentPlan.name,
+              tasks: List<Task>.from(currentPlan.tasks)
+                ..[index] = Task(
+                  description: text,
+                  complete: task.complete,
+                ),
+            );
         },
       ),
     );

@@ -1,4 +1,24 @@
+// // import 'package:flutter/material.dart';
+// // import './views/plan_screen.dart';
+
+// // void main() => runApp(const MasterPlanApp());
+
+// // class MasterPlanApp extends StatelessWidget {
+// //   const MasterPlanApp({super.key});
+
+// //   @override
+// //   Widget build(BuildContext context) {
+// //     return MaterialApp(
+// //       title: 'Master Plan',
+// //       theme: ThemeData(primarySwatch: Colors.purple),
+// //       home: const PlanScreen(),
+// //     );
+// //   }
+// // }
+
 // import 'package:flutter/material.dart';
+// import 'package:master_plan/models/data_layer.dart'; // Pastikan import model benar
+// import 'package:master_plan/provider/plan_provider.dart'; // Import provider baru
 // import './views/plan_screen.dart';
 
 // void main() => runApp(const MasterPlanApp());
@@ -9,16 +29,19 @@
 //   @override
 //   Widget build(BuildContext context) {
 //     return MaterialApp(
-//       title: 'Master Plan',
 //       theme: ThemeData(primarySwatch: Colors.purple),
-//       home: const PlanScreen(),
+//       home: PlanProvider( // Membungkus PlanScreen dengan Provider
+//         notifier: ValueNotifier<Plan>(const Plan()),
+//         child: const PlanScreen(),
+//       ),
 //     );
 //   }
 // }
 
 import 'package:flutter/material.dart';
-import 'package:master_plan/models/data_layer.dart'; // Pastikan import model benar
-import 'package:master_plan/provider/plan_provider.dart'; // Import provider baru
+import 'package:master_plan/models/data_layer.dart';
+import 'package:master_plan/provider/plan_provider.dart';
+import './views/plan_creator_screen.dart'; // Nanti akan dibuat
 import './views/plan_screen.dart';
 
 void main() => runApp(const MasterPlanApp());
@@ -28,11 +51,16 @@ class MasterPlanApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.purple),
-      home: PlanProvider( // Membungkus PlanScreen dengan Provider
-        notifier: ValueNotifier<Plan>(const Plan()),
-        child: const PlanScreen(),
+    return PlanProvider(
+      // Inisialisasi dengan List kosong
+      notifier: ValueNotifier<List<Plan>>(const []),
+      child: MaterialApp(
+        title: 'State management app',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        // Arahkan ke PlanCreatorScreen
+        home: const PlanCreatorScreen(),
       ),
     );
   }
