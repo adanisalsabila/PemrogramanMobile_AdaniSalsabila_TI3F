@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'httphelper.dart';
 import 'pizza.dart';
-import 'pizza_detail.dart'; // Pastikan import ini ada
+import 'pizza_detail.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,10 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // SOAL 1: Identitas Nama
       title: 'Flutter JSON Adani',
       theme: ThemeData(
-        // SOAL 1: Warna Tema Favorit (Misal: Indigo)
         primarySwatch: Colors.indigo,
         useMaterial3: true,
       ),
@@ -44,52 +42,75 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('JSON Adani'), // Pastikan nama Anda ada di sini
+        title: const Text('JSON Adani'),
       ),
       body: FutureBuilder(
         future: callPizzas(),
         builder: (BuildContext context, AsyncSnapshot<List<Pizza>> snapshot) {
-          // 1. Jika terjadi Error
+          // 1. Error Handling
           if (snapshot.hasError) {
             return const Center(
               child: Text('Something went wrong (Cek koneksi/Domain API)'),
             );
           }
-          // 2. Jika Data belum ada (Loading)
+          // 2. Loading State
           if (!snapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          // 3. Jika Data Ada -> Tampilkan ListView
+
+          // 3. Menampilkan Data dengan Dismissible (Swipe to Delete)
           return ListView.builder(
             itemCount: (snapshot.data == null) ? 0 : snapshot.data!.length,
             itemBuilder: (BuildContext context, int position) {
               final pizza = snapshot.data![position];
-              return ListTile(
-                leading: const Icon(Icons.local_pizza),
-                title: Text(pizza.pizzaName),
-                subtitle: Text(
-                  '${pizza.description} - € ${pizza.price}',
-                ),
-                // UPDATE: Tambahkan onTap untuk Edit (isNew: false)
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PizzaDetailScreen(
-                        pizza: pizza, // Kirim data yang diklik
-                        isNew: false, // Mode Edit (PUT)
-                      ),
-                    ),
+
+              // IMPLEMENTASI SOAL 4: Dismissible
+              return Dismissible(
+                // Key harus unik, gunakan ID pizza
+                key: Key(pizza.id.toString()),
+                
+                // Background Merah saat di-swipe
+                background: Container(color: Colors.red),
+                
+                // Aksi ketika item di-swipe (Dihapus)
+                onDismissed: (direction) {
+                  HttpHelper helper = HttpHelper();
+                  // Panggil fungsi delete di API
+                  helper.deletePizza(pizza.id);
+                  
+                  // Opsional: Tampilkan snackbar konfirmasi
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('${pizza.pizzaName} deleted')),
                   );
                 },
+                
+                // Child: Tampilan ListTile seperti biasa
+                child: ListTile(
+                  leading: const Icon(Icons.local_pizza),
+                  title: Text(pizza.pizzaName),
+                  subtitle: Text(
+                    '${pizza.description} - € ${pizza.price}',
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PizzaDetailScreen(
+                          pizza: pizza,
+                          isNew: false, // Mode Edit
+                        ),
+                      ),
+                    );
+                  },
+                ),
               );
             },
           );
         },
       ),
-      // UPDATE: FloatingActionButton untuk Tambah Baru (isNew: true)
+      // Tombol Tambah (FAB)
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
@@ -97,15 +118,14 @@ class _MyHomePageState extends State<MyHomePage> {
             context,
             MaterialPageRoute(
               builder: (context) => PizzaDetailScreen(
-                // Kirim Pizza kosong/default
                 pizza: Pizza(
                     id: 0,
                     pizzaName: '',
                     description: '',
                     price: 0,
                     imageUrl: '',
-                    myCrust: ''), // Field baru dari Soal 2
-                isNew: true, // Mode Baru (POST)
+                    myCrust: ''),
+                isNew: true, // Mode Baru
               ),
             ),
           );

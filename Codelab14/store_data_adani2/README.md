@@ -25,3 +25,14 @@
 ![hasil](img/praktikum3c.png)      
 
 ![hasil](img/praktikum3d.png)      
+
+# PRAKTIKUM 4 : Menghapus Data dari Web Service (DELETE)     
+
+
+![hasil](img/praktikum4.png)      
+
+![hasil](img/praktikum4b.png)      
+
+![hasil](img/praktikum4c.png)      
+
+![hasil](img/praktikum4d.png)      

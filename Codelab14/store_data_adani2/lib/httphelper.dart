@@ -37,7 +37,7 @@ class HttpHelper {
       return [];
     }
   }
-  
+
 Future<String> putPizza(Pizza pizza) async {
     const putPath = '/pizza';
     String put = json.encode(pizza.toJson());
@@ -50,4 +50,16 @@ Future<String> putPizza(Pizza pizza) async {
 
     return r.body;
   }
-}
+  
+Future<String> deletePizza(int id) async {
+    const deletePath = '/pizza';
+    Uri url = Uri.https(authority, deletePath);
+    
+    // Melakukan DELETE Request
+    http.Response r = await http.delete(
+      url,
+    );
+
+    return r.body;
+  }
+} 
